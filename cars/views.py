@@ -31,12 +31,12 @@ def RegisterCar(request):
         form = RegCar(request.POST, request.FILES)
         files = request.FILES.getlist("image")
         if form.is_valid():
-            obj = form.save()
-            # obj = form.save(commit=False)
-            # obj.owner = request.user
-            # obj.save()
+            obj = form.save(commit=False)
+            obj.owner = request.user
+            obj.save()
             for i in files:
                 CarImage.objects.create(model=obj, image=i)
+
             messages.success(request, "New Car Added")
             return redirect('cars')
     form = RegCar()
