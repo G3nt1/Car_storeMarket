@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.datetime_safe import datetime, date
 
 
-class Users(models.Model):
+class ApplicationUser(models.Model):
     COUNTRY_CHOICES = (
         ("FR", "France"),
         ("DE", "Germany"),
@@ -76,7 +76,7 @@ class Cars(models.Model):
     ]
     YEAR_CHOICES = [(r, r) for r in range(1984, date.today().year + 1)]
 
-    owner = models.ForeignKey(Users, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     brand = models.CharField(choices=CARS_BRANDS, max_length=200)
     model = models.CharField(max_length=250)
     fuel_type = models.CharField(max_length=200, choices=CHOICES_FUEL, default='diesel')

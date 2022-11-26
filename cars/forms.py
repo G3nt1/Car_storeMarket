@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Cars, Users
+from .models import Cars, ApplicationUser
 from django.contrib.auth.models import User
 
 
@@ -12,7 +12,7 @@ class RegCar(forms.ModelForm):
 
     class Meta:
         model = Cars
-        fields = ('owner', 'brand', 'model', 'fuel_type', 'mileage',
+        fields = ('brand', 'model', 'fuel_type', 'mileage',
                   'gearbox', 'year', 'motor', 'price', 'seller',
                   'doors', 'seats', 'color', 'features',
                   'previous_owners', 'image',)
@@ -48,5 +48,5 @@ class RegUsers(forms.ModelForm):
     country = forms.ChoiceField(choices=COUNTRY_CHOICES)
 
     class Meta:
-        model = Users
+        model = ApplicationUser
         fields = ('phone', 'address', 'city', 'country')
