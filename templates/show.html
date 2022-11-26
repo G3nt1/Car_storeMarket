@@ -1,0 +1,374 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+article.card.car-details {
+  border: 1px solid #f8f9fa;
+  box-shadow: 0 0 20px 0px #dee2e6;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+  -ms-transition: 0.3s all;
+  -o-transition: 0.3s all;
+  transition: 0.3s all;
+}
+article.card.car-details h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+article.card.car-details ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+article.card.car-details ul li {
+  margin-bottom: 1rem;
+}
+article.card.car-details ul li i {
+  width: 24px;
+}
+article.card.car-details ul.rating {
+  display: flex;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+article.card.car-details ul.rating li {
+  margin-bottom: 0;
+}
+article.card.car-details ul.rating li:not(:last-child) {
+  margin-right: 0.25rem;
+}
+article.card.car-details .thumbnail {
+  width: 220px;
+  height: 170px;
+  margin-right: 1rem;
+  border: 1px solid #e9ecef;
+  cursor: zoom-in;
+}
+article.card.car-details .thumbnail:after {
+  content: "\f00e";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #e9ecef;
+  background: #0000000d;
+  color: #6c757d;
+}
+article.card.car-details:not(:last-child) {
+  margin-bottom: 2rem;
+}
+article.card.car-details:hover {
+  background: #f8f9fa;
+}
+article.card.car-details:before {
+  width: 200px;
+  color: #fff;
+  position: absolute;
+  transform: rotate(-45deg);
+  z-index: 1;
+  text-align: center;
+  padding: 0.35rem;
+  top: 35px;
+  left: -50px;
+  font-weight: bold;
+}
+article.card.car-details.new:before {
+  content: "NEW";
+}
+article.card.car-details.sponsored:before {
+  content: "SPONSORED";
+}
+article.card.car-details.label-info:before {
+  background: #1DA1F2;
+}
+article.card.car-details.label-primary:before {
+  background: #004b9d;
+}
+article.card.car-details.label-success:before {
+  background: #218939;
+}
+article.card.car-details.label-warning:before {
+  background: #cb9b08;
+}
+article.card.car-details.label-danger:before {
+  background: #b23737;
+}
+article.card.car-details.label-purple:before {
+  background: #7032c2;
+}
+
+.text-grey {
+  color: #bbbbbb;
+}
+
+.btn-default {
+  background: #fff;
+  border: 1px solid #e9ecef;
+}
+.btn-default i {
+  color: #8e6c06;
+}
+
+/*# sourceMappingURL=style.css.map */
+
+Similar snippets
+
+</style>
+    <!-- Car Section Begin -->
+    <section class="car spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="car__sidebar">
+                        <div class="car__search">
+                            <h5>Car Search</h5>
+                            <form action="{% url 'search' %}" method="get">
+                                <input type="search" name="search" placeholder="Search...">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="car__filter">
+                            <h5>Car Filter</h5>
+                            <form action="#" enctype="multipart/form-data" method="get" name="q">
+                                {{ filter.form|crispy }}
+
+                                <div class="car__filter__btn">
+                                    <button type="submit" class="site-btn">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="car__filter__option">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="car__filter__option__item">
+                                    <h6>Show On Page</h6>
+                                    <select>
+                                        <option value="">9 Car</option>
+                                        <option value="">15 Car</option>
+                                        <option value="">20 Car</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="car__filter__option__item car__filter__option__item--right">
+                                    <h6>Sort By</h6>
+                                    <select>
+                                        <option value="">Price: Highest Fist</option>
+                                        <option value="">Price: Lowest Fist</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                {% if filter.qs %}
+                    <div class="container pt-5">
+    <div class="row">
+        <div class="col-12">
+            <article class="card car-details label-info sponsored">
+                <div class="card-body">
+                    {% for f in filter.qs %}
+                    <div class="d-flex flex-md-row align-items-md-start align-items-center flex-column">
+                        <div class="thumbnail position-relative mb-md-0 mb-3">
+                            <img src="{{ f.image.url }}" />
+                        </div>
+                        <div class="w-100">
+                            <div class="d-flex flex-md-row flex-column">
+                                <h3 class="mr-3">{{ f.brand }} {{ f.model }}</h3>
+                                <div class="ml-auto text-right">
+                                    <h3>{{f.price}} euro</h3>
+                                       <a href="{% url 'details' f.pk %}"></a>
+                                </div>
+                            </div>
+                                <hr>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-4 col-12">
+                                        <ul>
+                                            <li><i class="fas fa-tachometer-alt"></i> <strong>Millage:</strong> {{ f.mileage}} </li>
+                                            <li><i class="fas fa-users"></i> <strong>Prev Owners:</strong>{{  f.previous_owners}}</li>
+                                            <li><i class="fas fa-calendar"></i> <strong>First Registration:</strong>{{f.year}}</li>
+                                            <li><i class="fas fa-info-circle"></i> <strong>Displacement:</strong>
+                                                {{ f.motor }}cc</li>
+                                            <li><i class="fas fa-info-circle"></i> <strong>Perfomance:</strong> 118 kW (160 hp)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        <ul>
+                                            <li><i class="fas fa-info-circle"></i> <strong>Fuel Type:</strong>{{f.fuel_type}}</li>
+                                            <li><i class="fas fa-info-circle"></i> <strong>Transmision:</strong>{{f.gearbox}}</li>
+                                            <li><i class="fas fa-info-circle"></i> <strong>Features:</strong> {{ f.features }}</li>
+                                            <li data-toggle="tooltip" title="The emission class determines the tax bracket of a vehicle. You can find it under number 14 in the registration certificate part 1 (vehicle registration)."><i class="fas fa-info-circle"></i> <strong>Emission Class:</strong> 1,390cc</li>
+                                            <li><i class="fas fa-info-circle"></i> <strong>Perfomance:</strong> 118 kW (160 hp)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex flex-md-row flex-column align-items-center justify-content-end">
+                                            <button class="btn btn-success w-100 mb-md-0 mb-3 mr-md-3 mr-0"><i class="fas"></i>
+                                                {{ f.owner.phone }}</button>
+                                            <button class="btn btn-default w-100 mb-md-0 mb-3 mr-md-3 mr-0"><i class="fas"></i>{{f.owner.email}}</button>
+                                            <button class="btn btn-default w-100"><i class="fas "></i>{{f.owner.address}} {{f.owner.city}} {{f.owner.country}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+                 {% endfor %}
+            <hr>
+
+
+        </div>
+
+    </div>
+                    </div>
+                    </div>
+                {% else %}
+                    <div class="container">
+                    <div class="row">
+                    <div class="col-lg-5 col-md-5">
+                        {% for car in cars %}
+                            <div class="car__item">
+                            <div class="car__item__pic__slider owl-carousel">
+                                <img src="{{ car.image.url }}" alt="">
+                                <img src="{{ car.image.url }}" alt="">
+                                <img src="{{ car.image.url }}" alt="">
+                                <img src="{{ car.image.url }}" alt="">
+                            </div>
+                            <div class="car__item__text">
+                                <div class="car__item__text__inner">
+                                    <div class="label-date">{{ car.year }}</div>
+                                    <h5><a href="{% url 'details' car.pk %}">{{ car.brand }} {{ car.model }}</a>
+                                    </h5>
+                                    <ul>
+                                        <li><span>{{ car.mileage }}</span> km</li>
+                                        <li>{{ car.features }}</li>
+                                        <li><span>{{ car.fuel_type }}</span></li>
+                                        <li><span>{{ car.motor }}</span> cc</li>
+                                    </ul>
+                                </div>
+                                <div class="car__item__price">
+                                    <span class="car-option">Buy </span>
+                                    <h6>{{ car.price }}<span> €</span></h6>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                    </div>
+
+                    <div class="pagination__option">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#"><span class="arrow_carrot-2right"></span></a>
+                    </div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+    <!-- Car Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer set-bg" data-setbg="img/footer-bg.jpg">
+        <div class="container">
+            <div class="footer__contact">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="footer__contact__title">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="{% static 'img/footer-logo.png' %}" alt=""></a>
+                        </div>
+
+                        <div class="footer__social">
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google"></i></a>
+                            <a href="#" class="skype"><i class="fa fa-skype"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3">
+                    <div class="footer__widget">
+                        <h5>Infomation</h5>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Purchase</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Payemnt</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Shipping</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Return</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3">
+                    <div class="footer__widget">
+                        <h5>Infomation</h5>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Hatchback</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Sedan</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> SUV</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Crossover</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer__brand">
+                        <h5>Top Brand</h5>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Abarth</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Acura</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Alfa Romeo</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Audi</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> BMW</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Chevrolet</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Ferrari</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Honda</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

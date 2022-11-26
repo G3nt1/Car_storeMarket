@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+     {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+                <div class="car__item">
+                    {% for result in results %}
+                    <div class="car__item__pic__slider owl-carousel">
+                        <img src="{{ result.image.url }}" alt="">
+                        <img src="{% static 'img/cars/car-8.jpg' %}" alt="">
+                        <img src="{% static 'img/cars/car-6.jpg' %}" alt="">
+                        <img src="{% static 'img/cars/car-3.jpg' %}" alt="">
+                    </div>
+                    <div class="car__item__text">
+                        <div class="car__item__text__inner">
+                            <div class="label-date">{{ result.year }}</div>
+                            <h5><a href="{% url 'details' result.pk %}">{{ result.brand }} {{ result.model }}</a></h5>
+                            <ul>
+                                <li><span>{{ result.mileage }}</span> km</li>
+                                <li>{{ result.features }}</li>
+                                <li><span>{{ result.fuel_type }}</span></li>
+                                <li><span>{{ result.motor }}</span> cc</li>
+                            </ul>
+                        </div>
+                        <div class="car__item__price">
+                            <span class="car-option">Buy </span>
+                            <h6>{{ result.price }}<span> €</span></h6>
+                        </div>
+                    {% endfor %}
+                    </div>
+                        {% endif %}
+                </div>
+        </div>
+
+{% endblock %}

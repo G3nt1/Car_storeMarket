@@ -1,0 +1,9 @@
+# created by virtualenv automatically
+Lib
+*.log
+*.pot
+*.pyc
+__pycache__
+.idea
+media
+Scripts

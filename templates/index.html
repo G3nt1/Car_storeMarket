@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <!-- Hero Section Begin -->
+    <section class="hero spad set-bg" data-setbg="{% static 'img/hero-bg.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="hero__text">
+                        <div class="hero__text__title">
+                            <h2>FIND YOUR DREAM CAR</h2>
+                        </div>
+                        <div>
+                        <a href="{% url 'cars' %}" class="primary-btn"><img src="{% static 'img/wheel.png' %}" alt=""> Go to Cars</a>
+                        <a href="{% url 'registercar' %}" class="primary-btn more-btn">Sell Your Car</a>
+                    </div>
+                </div>
+{#                <div class="col-lg-pull-6">#}
+{#                    <div class="hero__tab">#}
+{#                        <ul class="nav nav-tabs" role="tablist">#}
+{#                            <li class="nav-item">#}
+{#                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Buy a Car</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                        <div class="tab-content">#}
+{#                            <div class="tab-pane active" id="tabs-1" role="tabpanel">#}
+{#                                <div class="hero__tab__form">#}
+{#                                    <h2>Find Your Dream Car</h2>#}
+{#                                    <form method="get" name="search" action="">#}
+{#                                        {{   filter.form|crispy }}#}
+{##}
+{#                                        <button type="submit" class="site-btn">Searching</button>#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+
+{% endblock %}
+
