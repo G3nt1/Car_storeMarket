@@ -51,7 +51,7 @@ def CarDetails(request, pk):
 
 
 def Search(request):
-    search = request.GET.get('search')
+    search = request.GET.get('query')
     results = []
     error = None
 
