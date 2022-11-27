@@ -179,12 +179,12 @@ article.card.car-details:before {
                             <article class="card car-details">
                 <div class="card-body">
                     <div class="d-flex flex-md-row align-items-md-start align-items-center flex-column">
-                        <div class="thumbnail position-relative mb-md-0 mb-3">
+                        <div class="">
                             <img src="{{ f.image.url }}" style="width: 200px; height: 200px"/>
                         </div>
                         <div class="w-100">
                             <div class="d-flex flex-md-row flex-column">
-                                <h3 class="mr-3"><a href="{% url 'details' f.pk %}" style="text-decoration: None">{{ f.brand }} {{ f.model }}</a> </h3>
+                                <h3 class="mr-3"><a  class="link-dark" href="{% url 'details' f.pk %}" style="text-decoration: None">{{ f.brand }} {{ f.model }}</a> </h3>
                                 <div class="ml-auto text-right">
                                     <div class="container-fluid">
                                     <h3  style="text-align: right">€{{ f.price }}</h3>
