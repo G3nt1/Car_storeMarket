@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cars.apps.CarsConfig',
     'multiselectfield',
     'crispy_forms',
+    "crispy_bootstrap5",
     'django_filters',
 ]
 
