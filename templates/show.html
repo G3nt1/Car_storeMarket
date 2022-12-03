@@ -8,274 +8,117 @@
             background-color: lightgray;
         }
 
-        article.card.car-details {
-            border: 1px solid #f8f9fa;
-            box-shadow: 0 0 20px 0px #dee2e6;
-            cursor: pointer;
-            overflow: hidden;
-            -webkit-transition: 0.3s all;
-            -moz-transition: 0.3s all;
-            -ms-transition: 0.3s all;
-            -o-transition: 0.3s all;
-            transition: 0.3s all;
-        }
 
-        article.card.car-details h3 {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
+        .card-img-left {
+    width: 25vw;
+    height: 25vw;
+    object-fit: cover;
+}
 
-        article.card.car-details ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        article.card.car-details ul li {
-            margin-bottom: 1rem;
-        }
-
-        article.card.car-details ul li i {
-            width: 24px;
-        }
-
-        article.card.car-details ul.rating {
-            display: flex;
-            font-size: 0.95rem;
-            margin-top: 1rem;
-        }
-
-        article.card.car-details ul.rating li {
-            margin-bottom: 0;
-        }
-
-        article.card.car-details ul.rating li:not(:last-child) {
-            margin-right: 0.25rem;
-        }
-
-        article.card.car-details .thumbnail {
-            width: 220px;
-            height: 170px;
-            margin-right: 1rem;
-            border: 1px solid #e9ecef;
-            cursor: zoom-in;
-        }
-
-        article.card.car-details .thumbnail:after {
-            content: "\f00e";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            position: absolute;
-            right: -1px;
-            bottom: -1px;
-            padding: 0.35rem 0.75rem;
-            border: 1px solid #e9ecef;
-            background: #0000000d;
-            color: #6c757d;
-        }
-
-        article.card.car-details:not(:last-child) {
-            margin-bottom: 2rem;
-        }
-
-        article.card.car-details:hover {
-            background: #f8f9fa;
-        }
-
-        article.card.car-details:before {
-            width: 200px;
-            color: #fff;
-            position: absolute;
-            transform: rotate(-45deg);
-            z-index: 1;
-            text-align: center;
-            padding: 0.35rem;
-            top: 35px;
-            left: -50px;
-            font-weight: bold;
-        }
-
-        .text-grey {
-            color: #bbbbbb;
-        }
-
-        .btn-default {
-            background: #fff;
-            border: 1px solid #e9ecef;
-        }
-
-        .btn-default i {
-            color: #8e6c06;
-        }
     </style>
-        <div class="row">
-            <form class="d-flex" role="search" style="padding: 10px" action="{% url 'search' %}" method="get">
-                <input class="form-control me-2" name="query" type="search" placeholder="Search a Car here"
-                       aria-label="Search"
-                       style="text-align: center">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-
+    <div class="row">
+        <form class="d-flex" role="search" style="padding: 10px" action="{% url 'cars' %}" method="get">
+            <input class="form-control me-2" name="query" type="text" placeholder="Search a Car here"
+                   aria-label="Search"
+                   value="{{ search }}"
+                   style="text-align: center">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        {% if error %}{{ error }}{% endif %}
     </div>
-        <div class="row">
-            <div class="col-3">
-                <form method="get" action="">
-                    {{ filter.form|crispy }}
-                    <input type="submit" class="btn btn-success" value="Submit">
-                </form>
+    <div class="row">
+        <div class="col-3">
+            <form method="get" action="">
+                {{ filter.form|crispy }}
+                <input type="submit" class="btn btn-success" value="Submit">
+            </form>
+        </div>
+        <div class="col-9">
+        {% if not filter %}
+            {% for car in results %}
+                <div class="card flex-row mb-2">
+                    <img class="card-img-left example-card-img-responsive" src="{{car.image.url}}" alt=""/>
+                  <div class="card-body">
+                    <h4 class="card-title h5 h4-sm">{{ car.brand }} {{ car.model }}</h4>
+                    <div class="card-text">
+                                                    <table>
+                                    <tr>
+                                        <th>Mileage:</th>
+                                        <td>{{ car.mileage }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>First Registration:</th>
+                                        <td>{{ car.year }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Fuel Type:</th>
+                                        <td>{{ car.fuel_type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prev Owners:</th>
+                                        <td>{{ car.previous_owners }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Color:</th>
+                                        <td>{{ car.color }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Motor:</th>
+                                        <td>{{ car.motor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Transmission:</th>
+                                        <td>{{ car.gearbox }}</td>
+                                    </tr>
 
-
+                                </table>
+                    </div>
             </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+     {% for f in filter.qs %}
+                <div class="card flex-row mb-2">
+                    <img class="card-img-left example-card-img-responsive" src="{{f.image.url}}" alt=""/>
+                  <div class="card-body">
+                    <h4 class="card-title h5 h4-sm">{{ f.brand }} {{ f.model }}</h4>
+                    <div class="card-text">
+                                                    <table>
+                                    <tr>
+                                        <th>Mileage:</th>
+                                        <td>{{ f.mileage }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>First Registration:</th>
+                                        <td>{{ f.year }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Fuel Type:</th>
+                                        <td>{{ f.fuel_type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prev Owners:</th>
+                                        <td>{{ f.previous_owners }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Color:</th>
+                                        <td>{{ f.color }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Motor:</th>
+                                        <td>{{ f.motor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Transmission:</th>
+                                        <td>{{ f.gearbox }}</td>
+                                    </tr>
 
-            <div class="col-9">
-                {% if not filter %}
-                    {% for car in cars %}
-                        <article class="card car-details">
-                            <div class="card-body">
-                                <div class="d-flex flex-md-row align-items-md-start align-items-center flex-column">
-                                    <div class="thumbnail position-relative mb-md-0 mb-3">
-                                        <img src="{{ car.image.url }}" style="width: 200px; height: 200px"/>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="d-flex flex-md-row flex-column">
-                                            <h3 class="mr-3">{{ car.brand }} {{ car.model }}</h3>
-                                            <div class="ml-auto text-right">
-                                                <div class="container-fluid">
-                                                    <h3 style="text-align: right">€{{ car.price }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-4 col-12">
-                                                    <ul>
-                                                        <li><i class="fas fa-tachometer-alt"></i>
-                                                            <strong>Millage:</strong> {{ car.mileage }}</li>
-                                                        <li><i class="fas fa-users"></i> <strong>Prev
-                                                            Owners:</strong>{{ car.previous_owners }}</li>
-                                                        <li><i class="fas fa-calendar"></i> <strong>First
-                                                            Registration:</strong>{{ car.year }}</li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Displacement:</strong>{{ car.motor }} cc
-                                                        </li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Transmission:</strong> {{ car.gearbox }}</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-md-8 col-12">
-                                                    <ul>
-                                                        <li><i class="fas fa-info-circle"></i> <strong>Fuel
-                                                            Type:</strong> {{ car.fuel_type }} </li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Features:</strong>
-                                                            {{ car.features }}</li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Color:</strong> {{ car.color }}</li>
-                                                        <li data-toggle="tooltip"
-                                                            title="The emission class determines the tax bracket of a vehicle. You can find it under number 14 in the registration certificate part 1 (vehicle registration).">
-                                                            <i class="fas fa-info-circle"></i> <strong>Emission
-                                                            Class:</strong> 1,390cc
-                                                        </li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Perfomance:</strong> 118 kW (160 hp)
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-end">
-                                                        <button class="btn btn-success w-100 mb-md-0 mb-3 mr-md-3 mr-0">
-                                                            <i class="fas fa-phone"></i>{{ car.owner }}</button>
-                                                        <button class="btn btn-default w-100 mb-md-0 mb-3 mr-md-3 mr-0">
-                                                            <i class="fas fa-parking"></i>
-                                                            {{ car.owner.email }}</button>
-                                                        <button class="btn btn-default w-100"><i class="fas fa-comment">Address</i>{{ car.owner.address }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    {% endfor %}
+                                </table>
                     </div>
-                {% else %}
-                    {% for f in filter.qs %}
-                        <article class="card car-details">
-                            <div class="card-body">
-                                <div class="d-flex flex-md-row align-items-md-start align-items-center flex-column">
-                                    <div class="">
-                                        <img src="{{ f.image.url }}" style="width: 200px; height: 200px"/>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="d-flex flex-md-row flex-column">
-                                            <h3 class="mr-3"><a class="link-dark" href="{% url 'details' f.pk %}"
-                                                                style="text-decoration: None">{{ f.brand }} {{ f.model }}</a>
-                                            </h3>
-                                            <div class="ml-auto text-right">
-                                                <div class="container-fluid">
-                                                    <h3 style="text-align: right">€{{ f.price }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-4 col-12">
-                                                    <ul>
-                                                        <li><i class="fas fa-tachometer-alt"></i>
-                                                            <strong>Millage:</strong> {{ f.mileage }}</li>
-                                                        <li><i class="fas fa-users"></i> <strong>Prev
-                                                            Owners:</strong>{{ f.previous_owners }}</li>
-                                                        <li><i class="fas fa-calendar"></i> <strong>First
-                                                            Registration:</strong>{{ f.year }}</li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Displacement:</strong>{{ f.motor }} cc
-                                                        </li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Transmission:</strong> {{ f.gearbox }}</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-md-8 col-12">
-                                                    <ul>
-                                                        <li><i class="fas fa-info-circle"></i> <strong>Fuel
-                                                            Type:</strong> {{ f.fuel_type }} </li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Features:</strong>
-                                                            {{ f.features }}</li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Color:</strong> {{ f.color }}</li>
-                                                        <li data-toggle="tooltip"
-                                                            title="The emission class determines the tax bracket of a vehicle. You can find it under number 14 in the registration certificate part 1 (vehicle registration).">
-                                                            <i class="fas fa-info-circle"></i> <strong>Emission
-                                                            Class:</strong> 1,390cc
-                                                        </li>
-                                                        <li><i class="fas fa-info-circle"></i>
-                                                            <strong>Perfomance:</strong> 118 kW (160 hp)
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="d-flex flex-md-row flex-column align-items-center justify-content-end">
-                                                        <button class="btn btn-success w-100 mb-md-0 mb-3 mr-md-3 mr-0">
-                                                            <i class="fas fa-phone"></i>{{ f.owner }}</button>
-                                                        <button class="btn btn-default w-100 mb-md-0 mb-3 mr-md-3 mr-0">
-                                                            <i class="fas fa-mail-reply"></i>
-                                                            {{ f.owner.email }}</button>
-                                                        <button class="btn btn-default w-100"><i class="fas fa-comment">Address</i>{{ f.owner.address }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    {% endfor %}
-                    </div>
-                {% endif %}
+            </div>
+                </div>
+            {% endfor %}
+    {% endif %}
+
 {% endblock %}

@@ -10,17 +10,42 @@ from .models import Cars, CarImage
 
 
 # Create your views here.
-def HomePage(request):
-    f = CarsFilter(request.GET, queryset=Cars.objects.all())
-
-    return render(request, 'index.html', {'filter': f})
 
 
 def CarShow(request):
-    cars = Cars.objects.all()
-    f = CarsFilter(request.GET, queryset=cars)
+    f = CarsFilter(request.GET, queryset=Cars.objects.all())
 
-    return render(request, 'show.html', {'cars': cars, 'filter': f})
+    return render(request, 'show.html', {'filter': f})
+
+
+def Search(request):
+    search = request.GET.get('query')
+    results = []
+    error = None
+
+    if len(search) < 3:
+        error = 'Your Query is too short'
+    else:
+        results = Cars.objects.filter(
+            Q(brand__icontains=search) |
+            Q(model__icontains=search) |
+            Q(fuel_type__icontains=search) |
+            Q(mileage__icontains=search) |
+            Q(year__icontains=search) |
+            Q(motor__icontains=search) |
+            Q(price__icontains=search) |
+            Q(doors__icontains=search) |
+            Q(seats__icontains=search) |
+            Q(color__icontains=search) |
+            Q(features__icontains=search) |
+            Q(gearbox__icontains=search)
+
+        )
+    return render(request, 'show.html', {
+        'results': results,
+        'search': search,
+        'error': error
+    })
 
 
 @login_required
@@ -46,35 +71,6 @@ def CarDetails(request, pk):
     makina = Cars.objects.get(id=pk)
 
     return render(request, 'car_details.html', {'makinat': makina})
-
-
-def Search(request):
-    search = request.GET.get('query')
-    results = []
-    error = None
-
-    if len(search) < 3:
-        error = 'Your Query its to short'
-    else:
-        results = Cars.objects.filter(
-            Q(brand__icontains=search) |
-            Q(model__icontains=search) |
-            Q(fuel_type__icontains=search) |
-            Q(mileage__icontains=search) |
-            Q(year__icontains=search) |
-            Q(motor__icontains=search) |
-            Q(price__icontains=search) |
-            Q(doors__icontains=search) |
-            Q(seats__icontains=search) |
-            Q(color__icontains=search) |
-            Q(features__icontains=search)
-
-        )
-    return render(request, 'search.html', {
-        'results': results,
-        'search': search,
-        'error': error
-    })
 
 
 def LoginClient(request):
