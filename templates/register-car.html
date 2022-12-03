@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {%  load static %}
 {% block content %}
 <form  method="post" action="" enctype="multipart/form-data">
 {% csrf_token %}
-{% for f in form %}
-    {{ f.label }}
-    {{ f }}
 
-{% endfor %}
+    {{ form|crispy }}
+
+
 
 <input type="submit" value="Register Your Car">
 </form>
