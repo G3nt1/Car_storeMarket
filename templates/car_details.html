@@ -3,34 +3,73 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-  <div class="col-12 col-md-10">
-       <div class="card shadow">
-          <div class="row g-3 align-items-top ">
-              <div class="col-md-5">
-                  <img src="{{makinat.image.url}}" class="card-img rounded-start" alt="Artist desk">
-              </div>
-              <div class="col-md-7">
+    <div class="col-12 col-md-10">
+        <div class="card shadow">
+            <div class="row g-3 align-items-top ">
+                <div class="col-md-6">
+                    <img src="{{ makinat.image.url }}" class="card-img rounded-start" alt="Cars Detail">
+                </div>
+                <div class="col-md-6">
 
-                      <div class="col-md-12">
-                          <ul>
-                              <li class="text-center fas fa-car"><strong>{{ makinat.brand }}  {{ makinat.model }}</strong></li>
-                              <li>Millage:{{ makinat.mileage }}</li>
-                              <li>First Registration:{{ makinat.year }}</li>
-                              <li>Fuel Type:{{ makinat.fuel_type }}</li>
-                              <li>Prev Owners:{{ makinat.previous_owners}}</li>
-                              <li>Color: {{ makinat.color }}</li>
-                              <li>Motor: {{ makinat.motor }}</li>
-                              <li>Transmission: {{ makinat.gearbox }}</li>
-                              <li class="fas fa-align-left">Features: {{ makinat.features }}</li>
+                    <div class="col-md-12">
+                        <div class="card flex-row mb-2">
+                            {#                            <img class="card-img-left example-card-img-responsive" src="{{ f.image.url }}" alt=""/>#}
+                            <div class="card-body">
+                                <h4 class="card-title h5 h4-sm"><strong>{{ makinat.brand }} {{ makinat.model }}</strong>
+                                </h4>
 
-                          </ul>
+                                <h4 class="badge rounded-pill text-bg-info"><strong> € {{ makinat.price }}</strong></h4>
+                                <div class="card-text">
+                                    <table>
+                                        <tr>
+                                            <th>Mileage:</th>
+                                            <td class="">{{ makinat.mileage }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>First Registration:</th>
+                                            <td>{{ makinat.year }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Fuel Type:</th>
+                                            <td>{{ makinat.fuel_type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Prev Owners:</th>
+                                            <td>{{ makinat.previous_owners }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Color:</th>
+                                            <td>{{ makinat.color }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Motor:</th>
+                                            <td>{{ makinat.motor }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Transmission:</th>
+                                            <td>{{ makinat.gearbox }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Features:</th>
+                                            <td>{{ makinat.features }}</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
 
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info">{{ makinat.owner.email }}</button>
+                <button type="button" class="btn btn-primary">{{ makinat.owner.email }}</button>
+                <button type="button" class="btn btn-success">{{ makinat.owner }}</button>
+            </div>
 
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+        </div>
+    </div>
 
 {% endblock %}

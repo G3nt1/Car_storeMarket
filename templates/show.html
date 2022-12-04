@@ -5,7 +5,7 @@
 {% block content %}
     <style>
         body {
-            background-color: lightgray;
+            background-color: whitesmoke;
         }
 
 
@@ -17,7 +17,7 @@
 
     </style>
     <div class="row">
-        <form class="d-flex" role="search" style="padding: 10px" action="{% url 'cars' %}" method="get">
+        <form class="d-flex" role="search" style="padding: 10px" action="{% url 'search' %}" method="get">
             <input class="form-control me-2" name="query" type="text" placeholder="Search a Car here"
                    aria-label="Search"
                    value="{{ search }}"
@@ -34,55 +34,12 @@
             </form>
         </div>
         <div class="col-9">
-        {% if not filter %}
-            {% for car in results %}
-                <div class="card flex-row mb-2">
-                    <img class="card-img-left example-card-img-responsive" src="{{car.image.url}}" alt=""/>
-                  <div class="card-body">
-                    <h4 class="card-title h5 h4-sm">{{ car.brand }} {{ car.model }}</h4>
-                    <div class="card-text">
-                                                    <table>
-                                    <tr>
-                                        <th>Mileage:</th>
-                                        <td>{{ car.mileage }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>First Registration:</th>
-                                        <td>{{ car.year }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fuel Type:</th>
-                                        <td>{{ car.fuel_type }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Prev Owners:</th>
-                                        <td>{{ car.previous_owners }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Color:</th>
-                                        <td>{{ car.color }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Motor:</th>
-                                        <td>{{ car.motor }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Transmission:</th>
-                                        <td>{{ car.gearbox }}</td>
-                                    </tr>
-
-                                </table>
-                    </div>
-            </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
      {% for f in filter.qs %}
                 <div class="card flex-row mb-2">
                     <img class="card-img-left example-card-img-responsive" src="{{f.image.url}}" alt=""/>
                   <div class="card-body">
-                    <h4 class="card-title h5 h4-sm">{{ f.brand }} {{ f.model }}</h4>
+                      <h4 class="card-title h5 h4-sm"><strong><a href="{% url 'details' f.pk %}" style="text-align: center; color: #5b80b2; text-decoration: None;">{{ f.brand }} {{ f.model }}</a></strong></h4>
+                      <h4 class="badge rounded-pill text-bg-info"><strong> € {{f.price}}</strong></h4>
                     <div class="card-text">
                                                     <table>
                                     <tr>
@@ -119,6 +76,6 @@
             </div>
                 </div>
             {% endfor %}
-    {% endif %}
+
 
 {% endblock %}

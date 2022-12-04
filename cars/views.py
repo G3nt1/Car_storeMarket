@@ -15,7 +15,7 @@ from .models import Cars, CarImage
 def CarShow(request):
     f = CarsFilter(request.GET, queryset=Cars.objects.all())
 
-    return render(request, 'show.html', {'filter': f})
+    return render(request, 'show.html', {'results': Cars.objects.all(), 'filter': f})
 
 
 def Search(request):
@@ -41,11 +41,12 @@ def Search(request):
             Q(gearbox__icontains=search)
 
         )
-    return render(request, 'show.html', {
+    context = {
         'results': results,
         'search': search,
         'error': error
-    })
+    }
+    return render(request, 'search.html', context)
 
 
 @login_required
@@ -97,7 +98,7 @@ def RegClients(request):
         if form.is_valid() and user_form.is_valid():
             user = user_form.save()
             # form.save()
-            profile = user.profile
+            profile = user.username
             profile.phone = request.POST['phone']
             profile.address = request.POST['address']
             profile.city = request.POST['city']
@@ -107,4 +108,5 @@ def RegClients(request):
     else:
         user_form = CreateUserForm()
         form = RegUsers()
-    return render(request, 'register.html', {'user_form': user_form, 'form': form})
+    context = {'user_form': user_form, 'form': form}
+    return render(request, 'register.html', context)
