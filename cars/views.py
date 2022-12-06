@@ -10,6 +10,9 @@ from .models import Cars, CarImage
 
 
 # Create your views here.
+def Index(request):
+
+    return render(request, 'index.html')
 
 
 def CarShow(request):
@@ -94,11 +97,11 @@ def LogoutClient(request):
 def RegClients(request):
     if request.method == 'POST':
         user_form = CreateUserForm(request.POST)
-        form = RegUsers(request.POST)
-        if form.is_valid() and user_form.is_valid():
+        profile_form = RegUsers(request.POST)
+        if profile_form.is_valid() and user_form.is_valid():
             user = user_form.save()
-            # form.save()
-            profile = user.username
+            profile = profile_form.save(commit=False)
+            profile.username = user
             profile.phone = request.POST['phone']
             profile.address = request.POST['address']
             profile.city = request.POST['city']
@@ -107,6 +110,6 @@ def RegClients(request):
             return redirect('login')
     else:
         user_form = CreateUserForm()
-        form = RegUsers()
-    context = {'user_form': user_form, 'form': form}
+        profile_form = RegUsers()
+    context = {'user_form': user_form, 'form': profile_form}
     return render(request, 'register.html', context)
