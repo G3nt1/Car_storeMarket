@@ -91,7 +91,7 @@ def LoginClient(request):
 
 def LogoutClient(request):
     logout(request)
-    return redirect('home')
+    return redirect('cars')
 
 
 def RegClients(request):
@@ -100,12 +100,13 @@ def RegClients(request):
         profile_form = RegUsers(request.POST)
         if profile_form.is_valid() and user_form.is_valid():
             user = user_form.save()
-            # form.save()
             profile = profile_form.save(commit=False)
             profile.username = user
+            profile.email = user.email
             profile.phone = request.POST['phone']
             profile.address = request.POST['address']
             profile.city = request.POST['city']
+            profile.zip_code = request.POST['zip_code']
             profile.country = request.POST['country']
             profile.save()
             return redirect('login')

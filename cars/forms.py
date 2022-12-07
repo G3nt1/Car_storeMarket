@@ -45,8 +45,9 @@ class RegUsers(forms.ModelForm):
     phone = forms.IntegerField()
     address = forms.CharField()
     city = forms.CharField()
+    zip_code = forms.CharField()
     country = forms.ChoiceField(choices=COUNTRY_CHOICES)
 
     class Meta:
         model = ApplicationUser
-        fields = ('phone', 'address', 'city', 'country')
+        fields = ('phone', 'address', 'city', 'zip_code', 'country')

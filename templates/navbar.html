@@ -7,19 +7,19 @@
             AutoALB
         </a>
         <div class="container" style="text-align: right;">
-            <a class="navbar-brand" href="{% url 'register_car' %}">
+            <a class="navbar-brand text-muted" href="{% url 'register_car' %}">
                 Add Cars
             </a>
 
-            <a class="navbar-brand" href="{% url 'cars' %}">
+            <a class="navbar-brand text-muted" href="{% url 'cars' %}">
                 Cars
             </a>
             {% if user.is_authenticated %}
-                <a class="navbar-brand" href="{% url 'logout' %}">
+                <a class="navbar-brand text-muted" href="{% url 'logout' %}">
                     Logout
                 </a>
             {% else %}
-                <a class="navbar-brand" href="{% url 'login' %}">
+                <a class="navbar-brand text-muted" href="{% url 'login' %}">
                     Login
                 </a>
             {% endif %}
