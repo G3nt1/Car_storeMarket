@@ -16,94 +16,43 @@
                             data-mobilelandscape="500"
                             data-mobileportrait="375"
                     >
-                        <div class="close"></div>
                         <div class="vertical-wrapper">
                             <div id="vertical-slider">
                                 <ul>
+                                    {% for i in image %}
                                     <li
-                                            data-image="{{makinat.image.url}}"
+                                            data-image="{{i.image.url}}"
                                             class="ui-draggable ui-draggable-handle ui-draggable-disabled"
                                     ></li>
-                                    <li
-                                            data-image="{% static 'images/1_2021_bugatti_chiron_super_sport.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/3.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/4.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/5.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/6.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/7.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/8.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
                         <div class="horizon-wrapper ">
                             <div class="horizone-nav">
                                 <div class="prev" style="display: none;">
-                                    <img src="{% static 'images/leftarrow.svg' %}"/>
+                                    <img src="{% static 'images/leftarrow.svg' %}" alt=""/>
                                 </div>
                                 <div class="next" style="display: block;">
                                     <img src="{% static 'images/rightarrow.svg' %}"/>
                                 </div>
                             </div>
+
                             <div id="horizon-slider" class="zoomin zoom-enable zoomed">
-                                <ul style="width: 600px; height: 600px; left: 0; top: 0;">
+                                <ul style="width: 900px; height: 600px; left: 0; top: 0;">
+                                    {% for images in image %}
                                     <li
-                                            data-image="{{makinat.image.url}}"
+                                            data-image="{{images.image.url}}"
                                             class="ui-draggable ui-draggable-handle ui-draggable-disabled"
                                     ></li>
-                                    <li
-                                            data-image="{% static 'images/1_2021_bugatti_chiron_super_sport.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/3.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/4.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/5.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/6.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/7.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
-                                    <li
-                                            data-image="{% static 'images/8.jpg' %}"
-                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
-                                    ></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <div class="dots">
                                 <div class="dotwrap"></div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -159,8 +108,8 @@
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-info">{{ makinat.owner.email }}</button>
-                <button type="button" class="btn btn-primary">{{ makinat.owner.email }}</button>
-                <button type="button" class="btn btn-success">{{ makinat.owner }}</button>
+                <button type="button" class="btn btn-primary">{{ makinat.owner.profile.phone}}</button>
+                <button type="button" class="btn btn-success">{{ makinat.owner.profile.address }} {{ makinat.owner.profile.city }} {{ makinat.owner.profile.country}}</button>
             </div>
         </div>
 {% endblock %}

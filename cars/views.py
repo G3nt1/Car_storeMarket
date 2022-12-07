@@ -16,7 +16,7 @@ def Index(request):
 
 
 def CarShow(request):
-    f = CarsFilter(request.GET, queryset=Cars.objects.all())
+    f = CarsFilter(request.GET, queryset=Cars.objects.all() .order_by('?'))
 
     return render(request, 'show.html', {'results': Cars.objects.all(), 'filter': f})
 
@@ -73,8 +73,8 @@ def RegisterCar(request):
 
 def CarDetails(request, pk):
     makina = Cars.objects.get(id=pk)
-
-    return render(request, 'car_details.html', {'makinat': makina})
+    image = CarImage.objects.filter(model=makina)
+    return render(request, 'car_details.html', {'makinat': makina, 'image': image})
 
 
 def LoginClient(request):
