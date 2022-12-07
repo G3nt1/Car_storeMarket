@@ -12,13 +12,13 @@
                    style="text-align: center">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-
-        <div class="col-12 col-md-10">
+<div class="col-md-12">
+        {% for result in results %}
         <div class="card shadow">
-            <div class="row g-3 align-items-top ">
-                {% for makinat in results %}
+            <div class="row g-3 align-items-top">
                 <div class="col-md-6">
-                    <img src="{{ results.image.url }}" class="card-img rounded-start" alt="Car">
+
+                    <img src="{{ result.image.url }}" class="card-img rounded-start" alt="Cars Detail">
                 </div>
                 <div class="col-md-6">
 
@@ -26,43 +26,43 @@
                         <div class="card flex-row mb-2">
                             {#                            <img class="card-img-left example-card-img-responsive" src="{{ f.image.url }}" alt=""/>#}
                             <div class="card-body">
-                                <h4 class="card-title h5 h4-sm"><strong>{{ makinat.brand }} {{ makinat.model }}</strong>
+                                <h4 class="card-title h5 h4-sm"><strong>{{ result.brand }} {{ result.model }}</strong>
                                 </h4>
 
-                                <h4 class="badge rounded-pill text-bg-info"><strong> € {{ makinat.price }}</strong></h4>
+                                <h4 class="badge rounded-pill text-bg-info"><strong> € {{ result.price }}</strong></h4>
                                 <div class="card-text">
                                     <table>
                                         <tr>
                                             <th>Mileage:</th>
-                                            <td class="">{{ makinat.mileage }}</td>
+                                            <td class="">{{ result.mileage }}</td>
                                         </tr>
                                         <tr>
                                             <th>First Registration:</th>
-                                            <td>{{ makinat.year }}</td>
+                                            <td>{{ result.year }}</td>
                                         </tr>
                                         <tr>
                                             <th>Fuel Type:</th>
-                                            <td>{{ makinat.fuel_type }}</td>
+                                            <td>{{ result.fuel_type }}</td>
                                         </tr>
                                         <tr>
                                             <th>Prev Owners:</th>
-                                            <td>{{ makinat.previous_owners }}</td>
+                                            <td>{{ result.previous_owners }}</td>
                                         </tr>
                                         <tr>
                                             <th>Color:</th>
-                                            <td>{{ makinat.color }}</td>
+                                            <td>{{ result.color }}</td>
                                         </tr>
                                         <tr>
                                             <th>Motor:</th>
-                                            <td>{{ makinat.motor }}</td>
+                                            <td>{{ result.motor }}</td>
                                         </tr>
                                         <tr>
                                             <th>Transmission:</th>
-                                            <td>{{ makinat.gearbox }}</td>
+                                            <td>{{ result.gearbox }}</td>
                                         </tr>
                                         <tr>
                                             <th>Features:</th>
-                                            <td>{{ makinat.features }}</td>
+                                            <td>{{ result.features }}</td>
                                         </tr>
 
                                     </table>
@@ -75,12 +75,12 @@
                 </div>
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-info">{{ makinat.owner.email }}</button>
-                <button type="button" class="btn btn-primary">{{ makinat.owner.email }}</button>
-                <button type="button" class="btn btn-success">{{ makinat.owner }}</button>
-                {% endfor %}
+                <button type="button" class="btn btn-info">{{ result.owner.email }}</button>
+                <button type="button" class="btn btn-primary">{{ result.owner.email }}</button>
+                <button type="button" class="btn btn-success">{{ result.owner }}</button>
             </div>
         </div>
+         {% endfor %}
     </div>
     {% endif %}
 {% endblock %}

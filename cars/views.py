@@ -100,6 +100,7 @@ def RegClients(request):
         profile_form = RegUsers(request.POST)
         if profile_form.is_valid() and user_form.is_valid():
             user = user_form.save()
+            # form.save()
             profile = profile_form.save(commit=False)
             profile.username = user
             profile.phone = request.POST['phone']
