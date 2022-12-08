@@ -42,7 +42,8 @@ class Cars(models.Model):
         ('honda', 'Honda'),
         ('toyota', 'Toyota'),
         ('chevrolet', 'Chevrolet'),
-        ('porsche', 'Porsche')
+        ('porsche', 'Porsche'),
+        ('renault', 'Renault')
     )
     CHOICES_FEATURES = (
         ('Cruise Control', 'Cruise Control'),
