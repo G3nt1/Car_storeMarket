@@ -1,25 +1,24 @@
 {% load static %}
 <nav class="navbar bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'cars' %}">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" width="30" height="24"
-                 class="d-inline-block align-text-top">
-            AutoALB
+        <a class="navbar-brand text" style="color: #5b80b2"  href ="{% url 'cars' %} ">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" width="60" height="54"
+                 class="d-inline-block align-text-top  m-2">
         </a>
-        <div class="container" style="text-align: right;">
-            <a class="navbar-brand text-muted" href="{% url 'register_car' %}">
+        <div class="container" style="text-align: center;">
+            <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'register_car' %}">
                 Add Cars
             </a>
 
-            <a class="navbar-brand text-muted" href="{% url 'cars' %}">
+            <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'cars' %}">
                 Cars
             </a>
             {% if user.is_authenticated %}
-                <a class="navbar-brand text-muted" href="{% url 'logout' %}">
+                <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'logout' %}">
                     Logout
                 </a>
             {% else %}
-                <a class="navbar-brand text-muted" href="{% url 'login' %}">
+                <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'login' %}">
                     Login
                 </a>
             {% endif %}

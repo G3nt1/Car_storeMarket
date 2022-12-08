@@ -16,18 +16,18 @@ def Index(request):
 
 
 def CarShow(request):
+    # Handle pagination
     f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('?'))
     paginator = Paginator(f.qs, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'show.html', {'results': f.qs, 'filter': f, 'page_obj': page_obj})
-
-
-def Search(request):
+    # Handle search
     search = request.GET.get('query')
     results = []
     error = None
+    if search is None:
+        search = ""
 
     if len(search) < 3:
         error = 'Your Query is too short'
@@ -47,12 +47,16 @@ def Search(request):
             Q(gearbox__icontains=search)
 
         )
+
+    # Render the template
     context = {
         'results': results,
         'search': search,
-        'error': error
+        'error': error,
+        'filter': f,
+        'page_obj': page_obj
     }
-    return render(request, 'search.html', context)
+    return render(request, 'show.html', context)
 
 
 @login_required
