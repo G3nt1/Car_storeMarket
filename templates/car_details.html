@@ -110,6 +110,11 @@
                 <button type="button" class="btn btn-info">{{ makinat.owner.email }}</button>
                 <button type="button" class="btn btn-primary">{{ makinat.owner.profile.phone}}</button>
                 <button type="button" class="btn btn-success">{{ makinat.owner.profile.address }} {{ makinat.owner.profile.city }} {{ makinat.owner.profile.country}}</button>
+                 {% if request.user != makinat.owner %}
+
+                 {% else %}
+                    <button type="button" class="btn btn-info"><a href="{% url 'update_car' makinat.pk %}">Edit</a></button>
+                {% endif %}
             </div>
         </div>
 {% endblock %}

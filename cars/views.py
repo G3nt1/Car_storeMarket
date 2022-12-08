@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .filters import CarsFilter
 from .forms import RegCar, RegUsers, CreateUserForm
@@ -11,14 +12,16 @@ from .models import Cars, CarImage
 
 # Create your views here.
 def Index(request):
-
     return render(request, 'index.html')
 
 
 def CarShow(request):
-    f = CarsFilter(request.GET, queryset=Cars.objects.all() .order_by('?'))
+    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('?'))
+    paginator = Paginator(f.qs, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    return render(request, 'show.html', {'results': Cars.objects.all(), 'filter': f})
+    return render(request, 'show.html', {'results': f.qs, 'filter': f, 'page_obj': page_obj})
 
 
 def Search(request):
@@ -53,7 +56,7 @@ def Search(request):
 
 
 @login_required
-def RegisterCar(request):
+def Register_Car(request):
     if request.method == 'POST':
         form = RegCar(request.POST, request.FILES)
         files = request.FILES.getlist("image")
@@ -69,6 +72,22 @@ def RegisterCar(request):
     form = RegCar()
 
     return render(request, 'register-car.html', {'form': form})
+
+
+@login_required(login_url='login')
+def Update_Car(request, pk):
+    car = get_object_or_404(Cars, id=pk)
+    if request.user != car.owner:
+        return redirect('details', car.pk)
+    if request.method == 'POST':
+        form = RegCar(request.POST, request.FILES, instance=car)
+        if form.is_valid():
+            form.save()
+            return redirect('cars')
+    else:
+        form = RegCar(instance=car)
+
+    return render(request, 'update_car.html', {'form': form})
 
 
 def CarDetails(request, pk):

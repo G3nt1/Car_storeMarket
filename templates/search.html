@@ -13,15 +13,58 @@
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
 <div class="col-md-12">
-        {% for result in results %}
         <div class="card shadow">
-            <div class="row g-3 align-items-top">
-                <div class="col-md-6">
+            <div class="row g-3 align-items-top ">
+                <div class="col-md-12">
+                    <div
+                            class="horVerSlider"
+                            data-desktop="800"
+                            data-tabportrait="600"
+                            data-tablandscape="600"
+                            data-mobilelarge="375"
+                            data-mobilelandscape="500"
+                            data-mobileportrait="375"
+                    >
+                        <div class="vertical-wrapper">
+                            <div id="vertical-slider">
+                                <ul>
+                                      {% for result in results %}
+                                    <li
+                                            data-image="{{result.image.url}}"
+                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
+                                    ></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="horizon-wrapper ">
+                            <div class="horizone-nav">
+                                <div class="prev" style="display: none;">
+                                    <img src="{% static 'images/leftarrow.svg' %}" alt=""/>
+                                </div>
+                                <div class="next" style="display: block;">
+                                    <img src="{% static 'images/rightarrow.svg' %}"/>
+                                </div>
+                            </div>
 
-                    <img src="{{ result.image.url }}" class="card-img rounded-start" alt="Cars Detail">
+                            <div id="horizon-slider" class="zoomin zoom-enable zoomed">
+                                <ul style="width: 900px; height: 600px; left: 0; top: 0;">
+                                    {% for results in results %}
+                                    <li
+                                            data-image="{{results.image.url}}"
+                                            class="ui-draggable ui-draggable-handle ui-draggable-disabled"
+                                    ></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="dots">
+                                <div class="dotwrap"></div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="col-md-6">
-
+                {% for result in results %}
                     <div class="col-md-12">
                         <div class="card flex-row mb-2">
                             {#                            <img class="card-img-left example-card-img-responsive" src="{{ f.image.url }}" alt=""/>#}
@@ -80,7 +123,6 @@
                 <button type="button" class="btn btn-success">{{ result.owner }}</button>
             </div>
         </div>
-         {% endfor %}
-    </div>
+        {% endfor %}
     {% endif %}
 {% endblock %}
