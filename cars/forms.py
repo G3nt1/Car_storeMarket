@@ -1,7 +1,9 @@
+from PIL.ImImagePlugin import number
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Cars, ApplicationUser
 from django.contrib.auth.models import User
+from django.template.defaultfilters import format
 
 
 class RegCar(forms.ModelForm):
@@ -9,6 +11,8 @@ class RegCar(forms.ModelForm):
         label="Image",
         widget=forms.ClearableFileInput(attrs={"multiple": True}),
     )
+    price = format(number, ",")
+    mileage = format(number, ",")
 
     class Meta:
         model = Cars

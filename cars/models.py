@@ -70,6 +70,7 @@ class Cars(models.Model):
         ('manual', 'Manual'),
         ('automatic', 'Automatic'),
     ]
+    number = 10000
 
     CHOICES_SELLER = [
         ('private', 'Private'),
@@ -81,11 +82,11 @@ class Cars(models.Model):
     brand = models.CharField(choices=CARS_BRANDS, max_length=200)
     model = models.CharField(max_length=250)
     fuel_type = models.CharField(max_length=200, choices=CHOICES_FUEL, default='diesel')
-    mileage = models.DecimalField(max_digits=9, decimal_places=3)
+    mileage = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     gearbox = models.CharField(max_length=50, choices=CHOICES_GEAR, null=True, blank=True)
     year = models.IntegerField(choices=YEAR_CHOICES, default='2000')
     motor = models.CharField(max_length=150, null=True, blank=True)
-    price = models.DecimalField(max_digits=9, decimal_places=3)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     seller = models.CharField(max_length=200, choices=CHOICES_SELLER, null=True, blank=True)
     doors = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(null=True, blank=True)

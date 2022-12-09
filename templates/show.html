@@ -22,7 +22,7 @@
                    aria-label="Search"
                    value="{{ search }}"
                    style="text-align: center">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-info" type="submit">Search</button>
         </form>
         {#        {% if error %}#}
         {#        <div class="alert alert-danger">{{ error }}</div>#}
@@ -32,7 +32,8 @@
         <div class="col-3">
             <form method="get" action="">
                 {{ filter.form|crispy }}
-                <input type="submit" class="btn btn-success" value="Submit">
+
+                <input type="submit" class="btn btn-info" value="Submit">
             </form>
         </div>
         {% if results %}

@@ -1,16 +1,49 @@
 {% extends 'base.html' %}
 {% load crispy_forms_filters %}
+{% load static %}
 {% load crispy_forms_tags %}
-{%  load static %}
 {% block content %}
-<form  method="post" action="" enctype="multipart/form-data">
-{% csrf_token %}
+    <!-- Section: Design Block -->
+    <section class="text-center">
+        <!-- Background image -->
+        <div class="p-5 bg-image" style="
+        background-image: {%  static 'images/1.jpg' %};
+        height: 300px;
+        "></div>
+        <!-- Background image -->
 
-    {{ form|crispy }}
+        <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        margin-top: -300px;
+        background: hsla(0, 0%, 100%, 0.8);
+        backdrop-filter: blur(30px);
+        ">
+            <div class="card-body py-5 px-md-5">
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold mb-5" style="color: #5b80b2">Register Your Car</h2>
+
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <form method="post"  action="{% url 'register_car' %}" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ form|crispy }}
 
 
-
-<input type="submit" value="Register Your Car" class="btn btn-info">
-</form>
+                                        <!-- Submit button -->
+                                        <button type="submit" value="submit" name="submit" class="btn btn-info btn-block mb-4">
+                                           Submit
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Section: Design Block -->
 
 {% endblock %}
