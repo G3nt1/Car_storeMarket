@@ -15,47 +15,68 @@ def Index(request):
 
 
 def CarShow(request):
-    # Filter Django_filter and pagination
-    # f = Cars.objects.all()
     f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
 
-    paginator = Paginator(f.qs, 3)
+    p = Paginator(Cars.objects.all(), per_page=5)
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = p.get_page(page_number)
 
+    return render(request, 'show.html', {
+        'results': None,
+        'search': "",
+        'error': None,
+        'page_obj': page_obj,
+        'filter': f,
+    })
+
+
+def CarAdvancedSearch(request):
+    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
+
+    p = Paginator(f.qs, per_page=5)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+
+    return render(request, 'show.html', {
+        'results': None,
+        'search': "",
+        'error': None,
+        'page_obj': page_obj,
+        'filter': f,
+    })
+
+
+def CarSearch(request):
+    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
     # search from a central search
     search = request.GET.get('query')
-    results = []
-    error = None
-    if search is None:
-        search = ""
-    if len(search) < 3:
-        error = 'Your Query is too short'
-    else:
-        results = Cars.objects.filter(
-            Q(brand__icontains=search) |
-            Q(model__icontains=search) |
-            Q(fuel_type__icontains=search) |
-            Q(mileage__icontains=search) |
-            Q(year__icontains=search) |
-            Q(motor__icontains=search) |
-            Q(price__icontains=search) |
-            Q(doors__icontains=search) |
-            Q(seats__icontains=search) |
-            Q(color__icontains=search) |
-            Q(features__icontains=search) |
-            Q(gearbox__icontains=search)
 
-        )
+    filter_qs = Cars.objects.filter(
+        Q(brand__icontains=search) |
+        Q(model__icontains=search) |
+        Q(fuel_type__icontains=search) |
+        Q(mileage__icontains=search) |
+        Q(year__icontains=search) |
+        Q(motor__icontains=search) |
+        Q(price__icontains=search) |
+        Q(doors__icontains=search) |
+        Q(seats__icontains=search) |
+        Q(color__icontains=search) |
+        Q(features__icontains=search) |
+        Q(gearbox__icontains=search)
 
-    context = {
-        'results': results,
+    )
+    p = Paginator(filter_qs, per_page=5)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+
+    return render(request, 'show.html', {
+        'results': None,
         'search': search,
-        'error': error,
+        'error': None,
+        'page_obj': page_obj,
         'filter': f,
-        'page_obj': page_obj
-    }
-    return render(request, 'show.html', context)
+    })
 
 
 @login_required

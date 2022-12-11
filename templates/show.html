@@ -17,20 +17,20 @@
 
     </style>
     <div class="row">
-        <form class="d-flex" role="search" style="padding: 10px" action="{% url 'cars' %}" method="get">
+        <form class="d-flex" role="search" style="padding: 10px" action="{% url 'cars_search' %}" method="get">
             <input class="form-control me-2" name="query" type="text" placeholder="Search a Car here"
                    aria-label="Search"
                    value="{{ search }}"
                    style="text-align: center">
             <button class="btn btn-outline-info" type="submit">Search</button>
         </form>
-        {#        {% if error %}#}
-        {#        <div class="alert alert-danger">{{ error }}</div>#}
-        {#         {% endif %}#}
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                 {% endif %}
     </div>
     <div class="row">
         <div class="col-3">
-            <form method="get" action="">
+            <form method="get" action="{% url 'cars_advanced_search' %}">
                 {{ filter.form|crispy }}
 
                 <input type="submit" class="btn btn-info" value="Submit">
