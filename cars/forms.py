@@ -1,7 +1,10 @@
 from PIL.ImImagePlugin import number
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Cars, ApplicationUser
+from django.db.models import Q
+from django.http import request
+
+from .models import Cars, Messages
 from django.contrib.auth.models import User
 from django.template.defaultfilters import format
 
@@ -17,7 +20,8 @@ class RegCar(forms.ModelForm):
         fields = ('brand', 'model', 'fuel_type', 'mileage',
                   'gearbox', 'year', 'motor', 'price', 'seller',
                   'doors', 'seats', 'color', 'features',
-                  'previous_owners', 'image',)
+                  'previous_owners', 'address', 'city',
+                  'zip_code', 'country', 'image')
 
 
 class CreateUserForm(UserCreationForm):
@@ -30,26 +34,14 @@ class CreateUserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = 'username', 'email'
+        fields = 'username', 'email', 'first_name', 'last_name'
 
 
-COUNTRY_CHOICES = (
-    ("FR", "France"),
-    ("DE", "Germany"),
-    ("AL", "Albania"),
-    ("BE", "Belgium"),
-    ("NL", "Nederland"),
-    ("IT", "Italy"),
-)
-
-
-class RegUsers(forms.ModelForm):
-    phone = forms.IntegerField()
-    address = forms.CharField()
-    city = forms.CharField()
-    zip_code = forms.CharField()
-    country = forms.ChoiceField(choices=COUNTRY_CHOICES)
+class MessageForm(forms.Form):
+    recipient = received_messages__recipient = request.user()
+    sender = sent_messages__sender = request.user()
+    text = forms.CharField(max_length=500)
 
     class Meta:
-        model = ApplicationUser
-        fields = ('phone', 'address', 'city', 'zip_code', 'country')
+        model = Messages
+        fields = '__all__'

@@ -5,27 +5,6 @@ from django.db import models
 from django.utils.datetime_safe import datetime, date
 
 
-class ApplicationUser(models.Model):
-    COUNTRY_CHOICES = (
-        ("FR", "France"),
-        ("DE", "Germany"),
-        ("AL", "Albania"),
-        ("BE", "Belgium"),
-        ("NL", "Nederland"),
-        ("IT", "Italy"),
-    )
-    username = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    email = models.EmailField(null=True, blank=True)
-    phone = models.CharField(max_length=250, blank=True)
-    address = models.CharField("Address line ", max_length=1024)
-    city = models.CharField("City", max_length=1024)
-    zip_code = models.CharField("ZIP / Postal code", max_length=12)
-    country = models.CharField(choices=COUNTRY_CHOICES, default='AL', max_length=1040)
-
-    def __str__(self):
-        return f'{self.username} {self.city} {self.country}'
-
-
 class Cars(models.Model):
     CARS_BRANDS = (
         ('Bmw', 'BMW'),
@@ -60,7 +39,15 @@ class Cars(models.Model):
         ('Wind Deflector', 'Wind Deflector'),
         ('Bluetooth Handset', 'Bluetooth Handset'),
     )
+    COUNTRY_CHOICES = (
+        ("FR", "France"),
+        ("DE", "Germany"),
+        ("AL", "Albania"),
+        ("BE", "Belgium"),
+        ("NL", "Nederland"),
+        ("IT", "Italy"),
 
+    )
     CHOICES_FUEL = [
         ('diesel', 'diesel'),
         ('benzina', 'Gasoline'),
@@ -86,7 +73,7 @@ class Cars(models.Model):
     gearbox = models.CharField(max_length=50, choices=CHOICES_GEAR, null=True, blank=True)
     year = models.IntegerField(choices=YEAR_CHOICES, default='2000')
     motor = models.CharField(max_length=150, null=True, blank=True)
-    price = models.IntegerField(max_length=10)
+    price = models.IntegerField()
     seller = models.CharField(max_length=200, choices=CHOICES_SELLER, null=True, blank=True)
     doors = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(null=True, blank=True)
@@ -94,6 +81,10 @@ class Cars(models.Model):
     features = MultiSelectField(max_length=1000, choices=CHOICES_FEATURES)
     created_date = models.DateTimeField(default=datetime.now, blank=True)
     previous_owners = models.IntegerField(null=True, blank=True)
+    address = models.CharField(max_length=1024, null=True, blank=True)
+    city = models.CharField(max_length=1024, null=True, blank=True)
+    zip_code = models.CharField(max_length=12, null=True, blank=True)
+    country = models.CharField(choices=COUNTRY_CHOICES, default='AL', max_length=1040)
     image = models.FileField(upload_to='static/images-cars/%Y/%m', null=True, blank=True)
 
     def __str__(self):
@@ -106,3 +97,10 @@ class CarImage(models.Model):
 
     def __str__(self):
         return f'{self.model}'
+
+
+class Messages(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

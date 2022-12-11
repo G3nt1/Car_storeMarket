@@ -29,7 +29,6 @@
                                         <form method="post" , action="{% url 'register' %}">
                                             {% csrf_token %}
                                             {{ user_form|crispy }}
-                                            {{ form|crispy }}
 
 
                                         <!-- Submit button -->

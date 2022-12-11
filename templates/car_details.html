@@ -110,9 +110,9 @@
                 </div>
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-info">{{ makinat.owner.email }}</button>
-                <button type="button" class="btn btn-primary">{{ makinat.owner.profile.phone}}</button>
-                <button type="button" class="btn btn-success">{{ makinat.owner.profile.address }} {{ makinat.owner.profile.city }} {{ makinat.owner.profile.country}}</button>
+                <button type="button" class="btn btn-info">{{ makinat.owner }}</button>
+                <button type="button" class="btn btn-primary">{{ makinat.owner.email}}</button>
+                <a href="{% url 'messages' %}">Contact User</a>
                  {% if request.user != makinat.owner %}
 
                  {% else %}

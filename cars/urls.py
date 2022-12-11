@@ -1,4 +1,4 @@
-from cars.views import cars, authentication
+from cars.views import cars, authentication, messages
 from django.urls import path
 
 urlpatterns = [
@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', authentication.LoginClient, name='login'),
     path('logout/', authentication.LogoutClient, name='logout'),
     path('register/', authentication.RegClients, name='register'),
+    path('messages/', messages.CreateMessages, name='messages'),
     # path('search/', views.Search, name='search'),
 
 ]

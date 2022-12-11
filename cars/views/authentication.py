@@ -1,4 +1,4 @@
-from cars.forms import CreateUserForm, RegUsers
+from cars.forms import CreateUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect, render
 
@@ -19,25 +19,15 @@ def LogoutClient(request):
     logout(request)
     return redirect('cars')
 
+
 # todo: Rinderto duke perdorur django forms.
 def RegClients(request):
     if request.method == 'POST':
         user_form = CreateUserForm(request.POST)
-        profile_form = RegUsers(request.POST)
-        if profile_form.is_valid() and user_form.is_valid():
-            user = user_form.save()
-            profile = profile_form.save(commit=False)
-            profile.username = user
-            profile.email = user.email
-            profile.phone = request.POST['phone']
-            profile.address = request.POST['address']
-            profile.city = request.POST['city']
-            profile.zip_code = request.POST['zip_code']
-            profile.country = request.POST['country']
-            profile.save()
+        if user_form.is_valid():
+            user_form.save()
             return redirect('login')
     else:
         user_form = CreateUserForm()
-        profile_form = RegUsers()
-    context = {'user_form': user_form, 'form': profile_form}
+    context = {'user_form': user_form}
     return render(request, 'register.html', context)
