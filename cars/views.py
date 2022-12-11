@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from .filters import CarsFilter
@@ -15,19 +15,20 @@ def Index(request):
 
 
 def CarShow(request):
-    # Handle pagination
-    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('?'))
+    # Filter Django_filter and pagination
+    # f = Cars.objects.all()
+    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
+
     paginator = Paginator(f.qs, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # Handle search
+    # search from a central search
     search = request.GET.get('query')
     results = []
     error = None
     if search is None:
         search = ""
-
     if len(search) < 3:
         error = 'Your Query is too short'
     else:
@@ -47,7 +48,6 @@ def CarShow(request):
 
         )
 
-    # Render the template
     context = {
         'results': results,
         'search': search,
