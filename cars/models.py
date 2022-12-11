@@ -28,22 +28,22 @@ class ApplicationUser(models.Model):
 
 class Cars(models.Model):
     CARS_BRANDS = (
-        ('bmw', 'BMW'),
-        ('mercedes benz', 'Mercedes Benz'),
-        ('audi', 'Audi'),
-        ('subaru', 'Subaru'),
-        ('tesla', 'Tesla'),
-        ('jaguar', 'Jaguar'),
-        ('land rover', 'Land Rover'),
-        ('bentley', 'Bentley'),
-        ('bugatti', 'Bugatti'),
-        ('ferrari', 'Ferrari'),
-        ('lamborghini', 'Lamborghini'),
-        ('honda', 'Honda'),
-        ('toyota', 'Toyota'),
-        ('chevrolet', 'Chevrolet'),
-        ('porsche', 'Porsche'),
-        ('renault', 'Renault')
+        ('Bmw', 'BMW'),
+        ('Mercedes benz', 'Mercedes Benz'),
+        ('Audi', 'Audi'),
+        ('Subaru', 'Subaru'),
+        ('Tesla', 'Tesla'),
+        ('Jaguar', 'Jaguar'),
+        ('Land rover', 'Land Rover'),
+        ('Bentley', 'Bentley'),
+        ('Bugatti', 'Bugatti'),
+        ('Ferrari', 'Ferrari'),
+        ('Lamborghini', 'Lamborghini'),
+        ('Honda', 'Honda'),
+        ('Toyota', 'Toyota'),
+        ('Chevrolet', 'Chevrolet'),
+        ('Porsche', 'Porsche'),
+        ('Renault', 'Renault')
     )
     CHOICES_FEATURES = (
         ('Cruise Control', 'Cruise Control'),
@@ -82,11 +82,11 @@ class Cars(models.Model):
     brand = models.CharField(choices=CARS_BRANDS, max_length=200)
     model = models.CharField(max_length=250)
     fuel_type = models.CharField(max_length=200, choices=CHOICES_FUEL, default='diesel')
-    mileage = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    mileage = models.IntegerField(null=True, blank=True)
     gearbox = models.CharField(max_length=50, choices=CHOICES_GEAR, null=True, blank=True)
     year = models.IntegerField(choices=YEAR_CHOICES, default='2000')
     motor = models.CharField(max_length=150, null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    price = models.IntegerField(max_length=10)
     seller = models.CharField(max_length=200, choices=CHOICES_SELLER, null=True, blank=True)
     doors = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(null=True, blank=True)

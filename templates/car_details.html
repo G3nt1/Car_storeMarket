@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -63,12 +64,12 @@
                                 <h4 class="card-title h5 h4-sm"><strong>{{ makinat.brand }} {{ makinat.model }}</strong>
                                 </h4>
 
-                                <h4 class="badge rounded-pill text-bg-info"><strong> € {{ makinat.price }}</strong></h4>
+                                <h4 class="badge rounded-pill text-bg-info"><strong> € {{ makinat.price|intcomma }}</strong></h4>
                                 <div class="card-text">
                                     <table>
                                         <tr>
                                             <th>Mileage:</th>
-                                            <td class="">{{ makinat.mileage }}</td>
+                                            <td class="">{{ makinat.mileage|intcomma }}</td>
                                         </tr>
                                         <tr>
                                             <th>First Registration:</th>
@@ -98,6 +99,8 @@
                                             <th>Features:</th>
                                             <td>{{ makinat.features }}</td>
                                         </tr>
+
+                                        <span title="{{ makinat.created_date }}">Created {{ makinat.created_date|timesince }} ago</span>
 
                                     </table>
                                 </div>

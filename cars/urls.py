@@ -4,7 +4,6 @@ from django.urls import path
 urlpatterns = [
     path('index', cars.Index, name='index'),
     path('', cars.CarShow, name='cars'),
-    path('search/', cars.CarSearch, name='cars_search'),
     path('advanced-search', cars.CarAdvancedSearch, name='cars_advanced_search'),
     path('regcar', cars.Register_Car, name='register_car'),
     path('update-car/<int:pk>', cars.Update_Car, name='update_car'),

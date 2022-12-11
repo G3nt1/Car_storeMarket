@@ -11,8 +11,6 @@ class RegCar(forms.ModelForm):
         label="Image",
         widget=forms.ClearableFileInput(attrs={"multiple": True}),
     )
-    price = format(number, ",")
-    mileage = format(number, ",")
 
     class Meta:
         model = Cars

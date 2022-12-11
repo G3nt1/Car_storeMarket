@@ -1,11 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, PageNotAnInteger
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from cars.filters import CarsFilter
-from cars.forms import RegCar, RegUsers, CreateUserForm
+from cars.forms import RegCar
 from cars.models import Cars, CarImage
+
+
+def Index(request):
+    return render(request, 'index.html')
 
 
 def get_car_filter(request):
@@ -16,16 +20,12 @@ def get_current_page_object(request, query_set):
     return Paginator(query_set, per_page=3).get_page(request.GET.get('page'))
 
 
-def Index(request):
-    return render(request, 'index.html')
-
-
-def CarShow(request):
-    return render(request, 'show.html', {
-        'search': "",
-        'page_obj': get_current_page_object(request, Cars.objects.all()),
-        'filter': get_car_filter(request),
-    })
+# def CarShow(request):
+#     return render(request, 'show.html', {
+#         'search': "",
+#         'page_obj': get_current_page_object(request, Cars.objects.all().order_by('-created_date')),
+#         'filter': get_car_filter(request),
+#     })
 
 
 def CarAdvancedSearch(request):
@@ -38,24 +38,26 @@ def CarAdvancedSearch(request):
     })
 
 
-def CarSearch(request):
+def CarShow(request):
     # search from a central search
     search = request.GET.get('query')
-
-    filter_qs = Cars.objects.filter(
-        Q(brand__icontains=search) |
-        Q(model__icontains=search) |
-        Q(fuel_type__icontains=search) |
-        Q(mileage__icontains=search) |
-        Q(year__icontains=search) |
-        Q(motor__icontains=search) |
-        Q(price__icontains=search) |
-        Q(doors__icontains=search) |
-        Q(seats__icontains=search) |
-        Q(color__icontains=search) |
-        Q(features__icontains=search) |
-        Q(gearbox__icontains=search)
-    )
+    if search:
+        filter_qs = Cars.objects.filter(
+            Q(brand__icontains=search) |
+            Q(model__icontains=search) |
+            Q(fuel_type__icontains=search) |
+            Q(mileage__icontains=search) |
+            Q(year__icontains=search) |
+            Q(motor__icontains=search) |
+            Q(price__icontains=search) |
+            Q(doors__icontains=search) |
+            Q(seats__icontains=search) |
+            Q(color__icontains=search) |
+            Q(features__icontains=search) |
+            Q(gearbox__icontains=search)
+        )
+    else:
+        filter_qs = Cars.objects.all().order_by('-created_date')
 
     return render(request, 'show.html', {
         'search': search,
