@@ -9,45 +9,37 @@ from .forms import RegCar, RegUsers, CreateUserForm
 from .models import Cars, CarImage
 
 
-# Create your views here.
+def get_car_filter(request):
+    return CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
+
+
+def get_current_page_object(request, query_set):
+    return Paginator(query_set, per_page=3).get_page(request.GET.get('page'))
+
+
 def Index(request):
     return render(request, 'index.html')
 
 
 def CarShow(request):
-    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
-
-    p = Paginator(Cars.objects.all(), per_page=5)
-    page_number = request.GET.get('page')
-    page_obj = p.get_page(page_number)
-
     return render(request, 'show.html', {
-        'results': None,
         'search': "",
-        'error': None,
-        'page_obj': page_obj,
-        'filter': f,
+        'page_obj': get_current_page_object(request, Cars.objects.all()),
+        'filter': get_car_filter(request),
     })
 
 
 def CarAdvancedSearch(request):
-    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
-
-    p = Paginator(f.qs, per_page=5)
-    page_number = request.GET.get('page')
-    page_obj = p.get_page(page_number)
+    f = get_car_filter(request)
 
     return render(request, 'show.html', {
-        'results': None,
         'search': "",
-        'error': None,
-        'page_obj': page_obj,
+        'page_obj': get_current_page_object(request, f.qs),
         'filter': f,
     })
 
 
 def CarSearch(request):
-    f = CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
     # search from a central search
     search = request.GET.get('query')
 
@@ -64,18 +56,12 @@ def CarSearch(request):
         Q(color__icontains=search) |
         Q(features__icontains=search) |
         Q(gearbox__icontains=search)
-
     )
-    p = Paginator(filter_qs, per_page=5)
-    page_number = request.GET.get('page')
-    page_obj = p.get_page(page_number)
 
     return render(request, 'show.html', {
-        'results': None,
         'search': search,
-        'error': None,
-        'page_obj': page_obj,
-        'filter': f,
+        'page_obj': get_current_page_object(request, filter_qs),
+        'filter': get_car_filter(request),
     })
 
 

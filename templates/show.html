@@ -24,9 +24,6 @@
                    style="text-align: center">
             <button class="btn btn-outline-info" type="submit">Search</button>
         </form>
-                {% if error %}
-                <div class="alert alert-danger">{{ error }}</div>
-                 {% endif %}
     </div>
     <div class="row">
         <div class="col-3">
@@ -36,125 +33,75 @@
                 <input type="submit" class="btn btn-info" value="Submit">
             </form>
         </div>
-        {% if results %}
-            <div class="col-9">
-                {% for result in results %}
-                    <div class="card flex-row mb-2">
-                        <img class="card-img-left example-card-img-responsive" src="{{ result.image.url }}" alt=""/>
-                        <div class="card-body">
-                            <h4 class="card-title h5 h4-sm"><strong><a href="{% url 'details' result.pk %}"
-                                                                       style="text-align: center; color: #5b80b2; text-decoration: None;">{{ result.brand }} {{ result.model }}</a></strong>
-                            </h4>
-                            <h4 class="badge rounded-pill text-bg-info"><strong> € {{ result.price }}</strong></h4>
-                            <div class="card-text">
-                                <table>
-                                    <tr>
-                                        <th>Mileage:</th>
-                                        <td>{{ result.mileage }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>First Registration:</th>
-                                        <td>{{ result.year }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fuel Type:</th>
-                                        <td>{{ result.fuel_type }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Prev Owners:</th>
-                                        <td>{{ result.previous_owners }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Color:</th>
-                                        <td>{{ result.color }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Motor:</th>
-                                        <td>{{ result.motor }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Transmission:</th>
-                                        <td>{{ result.gearbox }}</td>
-                                    </tr>
 
-                                </table>
-                            </div>
+        <div class="col-9">
+            {% for f in page_obj.object_list %}
+                <div class="card flex-row mb-2">
+                    <img class="card-img-left example-card-img-responsive" src="{{ f.image.url }}" alt=""/>
+                    <div class="card-body">
+                        <h4 class="card-title h5 h4-sm"><strong><a href="{% url 'details' f.pk %}"
+                                                                   style="text-align: center; color: #5b80b2; text-decoration: None;">{{ f.brand }} {{ f.model }}</a></strong>
+                        </h4>
+                        <h4 class="badge rounded-pill text-bg-info"><strong> € {{ f.price }}</strong></h4>
+                        <div class="card-text">
+                            <table>
+                                <tr>
+                                    <th>Mileage:</th>
+                                    <td>{{ f.mileage }}</td>
+                                </tr>
+                                <tr>
+                                    <th>First Registration:</th>
+                                    <td>{{ f.year }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Type:</th>
+                                    <td>{{ f.fuel_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prev Owners:</th>
+                                    <td>{{ f.previous_owners }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Color:</th>
+                                    <td>{{ f.color }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Motor:</th>
+                                    <td>{{ f.motor }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Transmission:</th>
+                                    <td>{{ f.gearbox }}</td>
+                                </tr>
+
+                            </table>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
+            <br/><br/>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">First &laquo </a></li>
+                        <li class="page-item ">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
 
 
-        {% else %}
-            <div class="col-9">
-                {% for f in page_obj.object_list %}
-                    <div class="card flex-row mb-2">
-                        <img class="card-img-left example-card-img-responsive" src="{{ f.image.url }}" alt=""/>
-                        <div class="card-body">
-                            <h4 class="card-title h5 h4-sm"><strong><a href="{% url 'details' f.pk %}"
-                                                                       style="text-align: center; color: #5b80b2; text-decoration: None;">{{ f.brand }} {{ f.model }}</a></strong>
-                            </h4>
-                            <h4 class="badge rounded-pill text-bg-info"><strong> € {{ f.price }}</strong></h4>
-                            <div class="card-text">
-                                <table>
-                                    <tr>
-                                        <th>Mileage:</th>
-                                        <td>{{ f.mileage }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>First Registration:</th>
-                                        <td>{{ f.year }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fuel Type:</th>
-                                        <td>{{ f.fuel_type }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Prev Owners:</th>
-                                        <td>{{ f.previous_owners }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Color:</th>
-                                        <td>{{ f.color }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Motor:</th>
-                                        <td>{{ f.motor }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Transmission:</th>
-                                        <td>{{ f.gearbox }}</td>
-                                    </tr>
+                    <li class="page-item disabled"><a href="#" class="page-link">Page {{ page_obj.number }}
+                        of {{ page_obj.paginator.num_pages }}</a></li>
 
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                <br/><br/>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page=1">First &laquo </a></li>
-                            <li class="page-item ">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-                        {% endif %}
-
-
-                        <li class="page-item disabled"><a href="#" class="page-link">Page {{ page_obj.number }}
-                            of {{ page_obj.paginator.num_pages }}</a></li>
-
-                        {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
-            </div>
-        {% endif %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        </div>
 {% endblock %}
