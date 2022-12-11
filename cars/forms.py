@@ -37,7 +37,7 @@ class CreateUserForm(UserCreationForm):
         fields = 'username', 'email', 'first_name', 'last_name'
 
 
-class MessageForm(forms.Form):
+class MessageForm(forms.ModelForm):
     recipient = received_messages__recipient = request.user()
     sender = sent_messages__sender = request.user()
     text = forms.CharField(max_length=500)

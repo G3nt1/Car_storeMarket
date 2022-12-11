@@ -8,7 +8,7 @@ def CreateMessages(request):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
-
+            form.save()
             text = form.cleaned_data['text']
             return redirect('index')
 
