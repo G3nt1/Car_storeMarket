@@ -40,12 +40,12 @@ class Cars(models.Model):
         ('Bluetooth Handset', 'Bluetooth Handset'),
     )
     COUNTRY_CHOICES = (
-        ("FR", "France"),
-        ("DE", "Germany"),
-        ("AL", "Albania"),
-        ("BE", "Belgium"),
-        ("NL", "Nederland"),
-        ("IT", "Italy"),
+        ("France", "France"),
+        ("Germany", "Germany"),
+        ("Albania", "Albania"),
+        ("Belgium", "Belgium"),
+        ("Nederland", "Nederland"),
+        ("Italy", "Italy"),
 
     )
     CHOICES_FUEL = [

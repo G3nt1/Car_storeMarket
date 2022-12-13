@@ -18,7 +18,7 @@
                 Conversation With: <bold>{{ username }}</bold>
 
                 {% for message in messages %}
-                    <div class="card mb-3 {% if message.sender == request.user %}text-bg-dark{% endif %}">
+                    <div class="card mb-3 {% if message.sender == request.user %}text-bg-info{% endif %}">
                         <div class="card-header">
                             {{ message.sender.username }}
                         </div>
@@ -29,12 +29,17 @@
                     </div>
                 {% endfor %}
             {% endif %}
+        <div class="form-outline">
         <form method="post" action="{% url 'messages_index' %}">
             {% csrf_token %}
-            {{ form|crispy }}
+            <label class="form-label" for="textAreaExample">Message</label>
+            <textarea name="text" class="form-control" id="textAreaExample1" rows="4"></textarea>
             <input type="submit" class="btn bg-info">
         </form>
-
+        </div>
         </div>
     </div>
 {% endblock %}
+
+
+

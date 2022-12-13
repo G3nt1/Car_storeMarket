@@ -3,9 +3,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-
-    <div class="col-md-12">
-        <div class="card shadow">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
             <div class="row g-3 align-items-top ">
                 <div class="col-md-12">
                     <div
@@ -40,7 +41,7 @@
                             </div>
 
                             <div id="horizon-slider" class="zoomin zoom-enable zoomed">
-                                <ul style="width: 900px; height: 600px; left: 0; top: 0;">
+                                <ul style="width: auto; height: 600px; left: 0; top: 0;">
                                     {% for images in image %}
                                     <li
                                             data-image="{{images.image.url}}"
@@ -53,13 +54,15 @@
                                 <div class="dotwrap"></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-                    <div class="col-md-12">
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                         <div class="card flex-row mb-2">
-                            {#                            <img class="card-img-left example-card-img-responsive" src="{{ f.image.url }}" alt=""/>#}
                             <div class="card-body">
                                 <h4 class="card-title h5 h4-sm"><strong>{{ makinat.brand }} {{ makinat.model }}</strong>
                                 </h4>
@@ -99,25 +102,50 @@
                                             <th>Features:</th>
                                             <td>{{ makinat.features }}</td>
                                         </tr>
-
                                         <span title="{{ makinat.created_date }}">Created {{ makinat.created_date|timesince }} ago</span>
-
                                     </table>
+                                    <hr>
+                                    <table>
+                                            <tr>
+                                            <th>Street:</th>
+                                            <td>{{ makinat.address }}</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>City:</th>
+                                            <td>{{ makinat.city }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Country:</th>
+                                            <td>{{ makinat.country }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Zip Code:</th>
+                                            <td>{{ makinat.zip_code}}</td>
+                                        </tr>
+                                    </table>
+                                <hr>
+                                    <div class="inline">
+                                    <span>
+                                    <label>Username:</label>
+                                         <a href="" class="" style="text-decoration: None">{{ makinat.owner }}</a>
+                                    <label>Email::</label>
+                                        <a  href="" class="" style="text-decoration: None">{{ makinat.owner.email }}</a>
+                                        <a href=" {% url 'messages_from_user' makinat.owner.username %}" style="text-decoration: None">Contact Owner:</a>
+                                        {% if request.user != makinat.owner %}
+
+                                        {% else %}
+                                            <a href="" class="" style="color: green;"><a href="{% url 'update_car' makinat.pk %}">Edit</a>
+
+                                        {% endif %}
+                                     </span>
+                                    </div>
+                                </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-info">{{ makinat.owner }}</button>
-                <button type="button" class="btn btn-primary">{{ makinat.owner.email}}</button>
-                <a href="{% url 'messages_from_user' makinat.owner.username %}">Contact User</a>
-                 {% if request.user != makinat.owner %}
 
-                 {% else %}
-                    <button type="button" class="btn btn-info"><a href="{% url 'update_car' makinat.pk %}">Edit</a></button>
-                {% endif %}
-            </div>
-        </div>
+
 {% endblock %}
