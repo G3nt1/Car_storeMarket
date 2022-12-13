@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-4">
+            <ul>
+                {% for u in bisedat_user %}
+                    <li><a href="{% url 'messages_from_user' u.username  %}">{{ u.username }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-8">
+            {% if username %}
+                Conversation With: <bold>{{ username }}</bold>
+
+                {% for message in messages %}
+                    <div class="card mb-3 {% if message.sender == request.user %}text-bg-dark{% endif %}">
+                        <div class="card-header">
+                            {{ message.sender.username }}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ message.text }}</p>
+                            <p class="card-text"><small class="text-muted">{{ message.created_at|timesince }} ago</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        <form method="post" action="{% url 'messages_index' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn bg-info">
+        </form>
+
+        </div>
+    </div>
+{% endblock %}

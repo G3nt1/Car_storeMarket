@@ -1,12 +1,7 @@
-from PIL.ImImagePlugin import number
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.db.models import Q
-from django.http import request
-
 from .models import Cars, Messages
 from django.contrib.auth.models import User
-from django.template.defaultfilters import format
 
 
 class RegCar(forms.ModelForm):
@@ -38,10 +33,7 @@ class CreateUserForm(UserCreationForm):
 
 
 class MessageForm(forms.ModelForm):
-    recipient = received_messages__recipient = request.user()
-    sender = sent_messages__sender = request.user()
-    text = forms.CharField(max_length=500)
 
     class Meta:
         model = Messages
-        fields = '__all__'
+        fields = ('text',)

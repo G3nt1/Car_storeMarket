@@ -112,7 +112,7 @@
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-info">{{ makinat.owner }}</button>
                 <button type="button" class="btn btn-primary">{{ makinat.owner.email}}</button>
-                <a href="{% url 'messages' %}">Contact User</a>
+                <a href="{% url 'messages_from_user' makinat.owner.username %}">Contact User</a>
                  {% if request.user != makinat.owner %}
 
                  {% else %}

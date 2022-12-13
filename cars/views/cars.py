@@ -8,10 +8,6 @@ from cars.forms import RegCar
 from cars.models import Cars, CarImage
 
 
-def Index(request):
-    return render(request, 'index.html')
-
-
 def get_car_filter(request):
     return CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
 
