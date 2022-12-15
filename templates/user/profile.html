@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+ <style>
+     body {
+           background-color: whitesmoke;
+        }
+
+
+        .card-img-left {
+            width: 25vw;
+            height: 25vw;
+            object-fit: cover;
+
+        }
+
+ </style>
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+             <div class="card">
+              <div class="upper">
+                <img src="" class="img-fluid">
+              </div>
+              <div class="user text-center">
+                <div class="profile">
+                  <img src="{% static 'images/shutterstock_2038266095.jpg' %}" class="rounded-circle" width="120">
+                </div>
+              </div>
+              <div class="mt-5 text-center">
+                <h4 class="mb-0">{{ user_profile.first_name}}  {{ user_profile.last_name }}</h4>
+                  <span class="text-muted d-block mb-2"><bold>Date Joined: </bold> {{user_profile.date_joined}}</span>
+
+                <a href="{% url 'messages_from_user' user_profile.username %}" class="btn btn-primary btn-sm follow">Message</a>
+                <div class="d-flex justify-content-between align-items-center mt-4 px-4">
+                </div>
+              </div>
+             </div>
+           </div>
+            <hr>
+                 {% for cars in cars %}
+                <div class="col-md-10">
+                <div class="card flex-row mb-2">
+                    <img class="card-img-left example-card-img-responsive" src="{{ cars.image.url }}" alt=""/>
+                    <div class="card-body">
+                        <h4 class="card-title h5 h4-sm"><strong><a href="{% url 'details' cars.pk %}"
+                                                                   style="text-align: center; color: #5b80b2; text-decoration: None;">{{ cars.brand }} {{ cars.model }}</a></strong>
+                        </h4>
+                        <h4 class="badge rounded-pill text-bg-info"><strong> € {{ cars.price|floatformat|intcomma }}</strong></h4>
+                        <div class="card-text">
+                            <table>
+                                <tr>
+                                    <th>Mileage:</th>
+                                    <td>{{ cars.mileage|floatformat|intcomma }}</td>
+                                </tr>
+                                <tr>
+                                    <th>First Registration:</th>
+                                    <td>{{ cars.year }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Type:</th>
+                                    <td>{{ cars.fuel_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prev Owners:</th>
+                                    <td>{{ cars.previous_owners }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Color:</th>
+                                    <td>{{ cars.color }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Motor:</th>
+                                    <td>{{ cars.motor }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Transmission:</th>
+                                    <td>{{ cars.gearbox }}</td>
+                                </tr>
+                                <span title="{{ cars.created_date }}">Created {{ cars.created_date|timesince }} ago</span>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                  {% endfor %}
+            </div>
+            </div>
+{% endblock %}

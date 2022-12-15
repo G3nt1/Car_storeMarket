@@ -27,7 +27,7 @@ def get_current_page_object(request, query_set):
 def CarAdvancedSearch(request):
     f = get_car_filter(request)
 
-    return render(request, 'show.html', {
+    return render(request, 'cars/show.html', {
         'search': "",
         'page_obj': get_current_page_object(request, f.qs),
         'filter': f,
@@ -50,12 +50,13 @@ def CarShow(request):
             Q(seats__icontains=search) |
             Q(color__icontains=search) |
             Q(features__icontains=search) |
-            Q(gearbox__icontains=search)
+            Q(gearbox__icontains=search)|
+            Q(owner__username__icontains=search)
         )
     else:
         filter_qs = Cars.objects.all().order_by('-created_date')
 
-    return render(request, 'show.html', {
+    return render(request, 'cars/show.html', {
         'search': search,
         'page_obj': get_current_page_object(request, filter_qs),
         'filter': get_car_filter(request),
@@ -78,7 +79,7 @@ def Register_Car(request):
             return redirect('cars')
     form = RegCar()
 
-    return render(request, 'register-car.html', {'form': form})
+    return render(request, 'cars/register-car.html', {'form': form})
 
 
 @login_required(login_url='login')
@@ -94,10 +95,12 @@ def Update_Car(request, pk):
     else:
         form = RegCar(instance=car)
 
-    return render(request, 'update_car.html', {'form': form})
+    return render(request, 'cars/update_car.html', {'form': form})
 
 
 def CarDetails(request, pk):
     makina = Cars.objects.get(id=pk)
     image = CarImage.objects.filter(model=makina)
-    return render(request, 'car_details.html', {'makinat': makina, 'image': image})
+    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image})
+
+

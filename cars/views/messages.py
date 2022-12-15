@@ -27,7 +27,7 @@ def Index(request, username=None):
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
-            message.recipient = request.user
+            message.recipient = User.objects.get(username=form.cleaned_data['recipient'])
             message.save()
             return redirect('messages_from_user', message.sender.username)
         else:

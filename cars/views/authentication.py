@@ -1,5 +1,7 @@
 from cars.forms import CreateUserForm
+from cars.models import Cars
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
 
@@ -12,7 +14,7 @@ def LoginClient(request):
             login(request, user)
             return redirect('cars')
 
-    return render(request, 'loginclient.html')
+    return render(request, 'user/loginclient.html')
 
 
 def LogoutClient(request):
@@ -30,4 +32,11 @@ def RegClients(request):
     else:
         user_form = CreateUserForm()
     context = {'user_form': user_form}
-    return render(request, 'register.html', context)
+    return render(request, 'user/register.html', context)
+
+
+def Profile(request, pk):
+    user_profile = User.objects.get(id=pk)
+    cars = Cars.objects.filter(owner=user_profile)
+
+    return render(request, 'user/profile.html', {'user_profile': user_profile, 'cars': cars})

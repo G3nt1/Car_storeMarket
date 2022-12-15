@@ -32,8 +32,7 @@
         <div class="form-outline">
         <form method="post" action="{% url 'messages_index' %}">
             {% csrf_token %}
-            <label class="form-label" for="textAreaExample">Message</label>
-            <textarea name="text" class="form-control" id="textAreaExample1" rows="4"></textarea>
+            {{ form|crispy }}
             <input type="submit" class="btn bg-info">
         </form>
         </div>

@@ -33,6 +33,7 @@
 {#            </li>#}
             <li class="nav-item">
             {% if user.is_authenticated %}
+                {{ user.username }}
                 <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'logout' %}">
                     Logout
                 </a>
