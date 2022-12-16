@@ -50,7 +50,7 @@ def CarShow(request):
             Q(seats__icontains=search) |
             Q(color__icontains=search) |
             Q(features__icontains=search) |
-            Q(gearbox__icontains=search)|
+            Q(gearbox__icontains=search) |
             Q(owner__username__icontains=search)
         )
     else:
@@ -102,5 +102,3 @@ def CarDetails(request, pk):
     makina = Cars.objects.get(id=pk)
     image = CarImage.objects.filter(model=makina)
     return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image})
-
-

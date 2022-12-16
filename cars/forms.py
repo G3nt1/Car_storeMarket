@@ -33,9 +33,8 @@ class CreateUserForm(UserCreationForm):
 
 
 class MessageForm(forms.ModelForm):
+    recipient = forms.CharField(widget=forms.HiddenInput())
+
     class Meta:
         model = Messages
         fields = ('text', 'recipient')
-
-    # widgets = {
-    #     'recipient': forms.HiddenInput({'recipient': 'username.'}), }

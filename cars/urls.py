@@ -1,4 +1,4 @@
-from cars.views import cars, authentication, messages
+from cars.views import cars, authentication, messages, admin
 from django.urls import path
 
 urlpatterns = [
@@ -14,5 +14,9 @@ urlpatterns = [
     path('register/', authentication.RegClients, name='register'),
     path('messages/', messages.Index, name='messages_index'),
     path('messages/<str:username>', messages.Index, name='messages_from_user'),
+
+    path('admin_statistic', admin.AdminStatistic, name='admin-statistic'),
+
+
 
 ]

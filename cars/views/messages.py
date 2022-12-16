@@ -1,5 +1,5 @@
 from cars.forms import MessageForm
-from cars.models import Messages
+from cars.models import Messages, Cars
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseNotFound
@@ -27,7 +27,7 @@ def Index(request, username=None):
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
-            message.recipient = User.objects.get(username=form.cleaned_data['recipient'])
+            # message.recipient = Cars.owner.username
             message.save()
             return redirect('messages_from_user', message.sender.username)
         else:

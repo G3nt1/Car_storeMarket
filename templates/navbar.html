@@ -45,6 +45,12 @@
             </li>
         </ul>
     </div>
+{% if user.is_superuser %}
+<span class="navbar-text p-3">
+            <a href="{% url 'admin-statistic' %}" >
+                  Admin Statistic
+                </a>
+{% endif %}
     <span class="navbar-text p-3">
             <a href="{% url 'messages_index' %}" type="button" class="btn btn-warning position-relative">
                   Inbox
