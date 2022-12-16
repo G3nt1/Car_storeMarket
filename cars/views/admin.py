@@ -15,5 +15,3 @@ def AdminStatistic(request):
     users = User.objects.all()
 
     return render(request, 'admin/admin_index.html', {'cars': cars, 'users': users})
-
-
