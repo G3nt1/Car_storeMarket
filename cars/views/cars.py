@@ -35,6 +35,10 @@ def CarAdvancedSearch(request):
 
 
 def CarShow(request):
+    # visitors = Cars.objects.all()
+    # if visitors:
+    #     visitors.views = visitors.views + 1
+    #     visitors.save()
     # search from a central search
     search = request.GET.get('query')
     if search:
@@ -60,6 +64,7 @@ def CarShow(request):
         'search': search,
         'page_obj': get_current_page_object(request, filter_qs),
         'filter': get_car_filter(request),
+         # 'visitors': visitors,
     })
 
 
@@ -99,6 +104,10 @@ def Update_Car(request, pk):
 
 
 def CarDetails(request, pk):
+    visitors = Cars.objects.get(id=pk)
+    if visitors:
+        visitors.views = visitors.views + 1
+        visitors.save()
     makina = Cars.objects.get(id=pk)
     image = CarImage.objects.filter(model=makina)
-    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image})
+    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image,'visitors': visitors})

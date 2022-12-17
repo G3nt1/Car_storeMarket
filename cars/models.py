@@ -91,6 +91,7 @@ class Cars(models.Model):
     hit_count = GenericRelation(
         HitCount, object_id_field='object_pk',
         related_query_name='hit_count_generic_relation')
+    views = models.IntegerField(default=0)
 
     def current_hit_count(self):
         return self.hit_count.hits
