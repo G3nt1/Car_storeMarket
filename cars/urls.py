@@ -14,9 +14,8 @@ urlpatterns = [
     path('register/', authentication.RegClients, name='register'),
     path('messages/', messages.Index, name='messages_index'),
     path('messages/<str:username>', messages.Index, name='messages_from_user'),
+    path('messages/<str:username>/send', messages.SendMessage, name='messages_send_message'),
 
     path('admin_statistic', administrator.AdminStatistic, name='admin-statistic'),
-
-
 
 ]

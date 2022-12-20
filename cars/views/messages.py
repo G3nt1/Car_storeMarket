@@ -8,33 +8,22 @@ from django.shortcuts import render, redirect
 
 def Index(request, username=None):
     if username:
-        sender = User.objects.filter(username=username).first()
+        other_user = User.objects.filter(username=username).first()
 
-        if not sender:
-            return HttpResponseNotFound("Sender not found")
+        if not other_user:
+            return HttpResponseNotFound("User not found")
 
         # mesazhe te cilat na kane ardhur nga sender
         # mesazhet qe ne i kemi derguar senderit
-        messages = Messages.objects.filter(Q(sender=sender, recipient=request.user) | Q(sender=request.user, recipient=sender))
+        messages = Messages.objects\
+            .filter(Q(sender=other_user, recipient=request.user) | Q(sender=request.user, recipient=other_user))\
+            .order_by('id')
     else:
         messages = []
 
     user_ids = Messages.objects.filter(recipient=request.user).values('sender').distinct()
     bisedat = User.objects.filter(id__in=user_ids)
-
-    if request.method == 'POST':
-        form = MessageForm(request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.sender = request.user
-            # message.recipient = Cars.owner.username
-            message.save()
-            return redirect('messages_from_user', message.sender.username)
-        else:
-            return HttpResponseNotFound('Recipient Not Found')
-
-    else:
-        form = MessageForm()
+    form = MessageForm()
 
     return render(request, 'messages/index.html', {
         "messages": messages,
@@ -42,3 +31,19 @@ def Index(request, username=None):
         "username": username,
         'form': form
     })
+
+
+def SendMessage(request, username):
+    recipient = User.objects.filter(username=username).first()
+
+    if not recipient:
+        return None  # 404 ketu
+
+    form = MessageForm(request.POST)
+    if form.is_valid():
+        message = form.save(commit=False)
+        message.sender = request.user
+        message.recipient = recipient
+        message.save()
+
+    return redirect('messages_from_user', username)

@@ -30,7 +30,7 @@
                 {% endfor %}
             {% endif %}
         <div class="form-outline">
-        <form method="post" action="{% url 'messages_index' %}">
+        <form method="post" action="{% url 'messages_send_message' username %}">
             {% csrf_token %}
             {{ form|crispy }}
             <input type="submit" class="btn bg-info">
