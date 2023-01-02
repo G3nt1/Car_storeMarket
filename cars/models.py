@@ -113,3 +113,12 @@ class Messages(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages', null=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Monitor(models.Model):
+    ip_address = models.IntegerField()
+    browser = models.CharField(max_length=1000, null=True)
+    system = models.CharField(max_length=1000, null=True)
+
+    def __str__(self):
+        return self.ip_address, self.browser, self.system,

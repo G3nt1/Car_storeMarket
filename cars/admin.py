@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cars.models import Cars, CarImage
+from cars.models import Cars, CarImage, Monitor
 
 
 class HitAdmin(admin.ModelAdmin):
@@ -12,5 +12,6 @@ class HitAdmin(admin.ModelAdmin):
     formatted_hit_count.short_description = 'Hits'
 
 
-admin.site.register(Cars, HitAdmin)
+admin.site.register(Cars)
 admin.site.register(CarImage)
+admin.site.register(Monitor)

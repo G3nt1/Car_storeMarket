@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from cars.filters import CarsFilter
 from cars.forms import RegCar
 from cars.models import Cars, CarImage
@@ -35,10 +35,6 @@ def CarAdvancedSearch(request):
 
 
 def CarShow(request):
-    # visitors = Cars.objects.all()
-    # if visitors:
-    #     visitors.views = visitors.views + 1
-    #     visitors.save()
     # search from a central search
     search = request.GET.get('query')
     if search:
@@ -64,9 +60,19 @@ def CarShow(request):
         'search': search,
         'page_obj': get_current_page_object(request, filter_qs),
         'filter': get_car_filter(request),
-         # 'visitors': visitors,
+
     })
 
+
+# def visitor_ip_address(request):
+#
+#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#
+#     if x_forwarded_for:
+#         ip = x_forwarded_for.split(',')[0]
+#     else:
+#         ip = request.META.get('REMOTE_ADDR')
+#     return ip
 
 @login_required
 def Register_Car(request):
@@ -110,4 +116,4 @@ def CarDetails(request, pk):
         visitors.save()
     makina = Cars.objects.get(id=pk)
     image = CarImage.objects.filter(model=makina)
-    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image,'visitors': visitors})
+    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image, 'visitors': visitors})

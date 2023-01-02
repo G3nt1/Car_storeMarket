@@ -6,6 +6,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 
 
+# id user, id makine, useragent, ip, daten
 def Index(request, username=None):
     if username:
         other_user = User.objects.filter(username=username).first()
@@ -15,8 +16,8 @@ def Index(request, username=None):
 
         # mesazhe te cilat na kane ardhur nga sender
         # mesazhet qe ne i kemi derguar senderit
-        messages = Messages.objects\
-            .filter(Q(sender=other_user, recipient=request.user) | Q(sender=request.user, recipient=other_user))\
+        messages = Messages.objects \
+            .filter(Q(sender=other_user, recipient=request.user) | Q(sender=request.user, recipient=other_user)) \
             .order_by('id')
     else:
         messages = []

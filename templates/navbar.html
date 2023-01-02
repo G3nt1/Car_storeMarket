@@ -13,50 +13,108 @@
     <title></title>
 </head>
 <body>
+<style>
+    a {
+        text-decoration: none;
+        color: #0c7f90;
+        font-size: 25px;
+        margin-top: 10px;
+        margin-right: 50px;
+        margin-left: auto;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    i {
+        text-decoration: none;
+        color: #0c7f90;
+        font-size: 25px;
+        margin-top: 10px;
+        margin-right: 50px;
+        margin-left: auto;
+        font-weight: 500;
+        cursor: pointer;
+    }
+</style>
+
+
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <img src="{% static 'images/logo.png' %}" alt="Logo" width="60" height="54">
-    <a class="navbar-brand text" style="color: red" href="{% url 'cars' %}">AlbCars</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
     </button>
-    <div class="container" id="navbarNav" style="text-align: center">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'cars' %}">Cars</a>
-            </li>
-            <li class="nav-item">
-                <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'register_car' %}">Add Car</a>
-            </li>
-{#            <li class="nav-item">#}
-{#                <a class="nav-link" href="#">Link 3</a>#}
-{#            </li>#}
-            <li class="nav-item">
-            {% if user.is_authenticated %}
-                {{ user.username }}
-                <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'logout' %}">
-                    Logout
-                </a>
-            {% else %}
-                <a class="navbar-brand text" style="color: #5b80b2" href="{% url 'login' %}">
-                    Login
-                </a>
-            {% endif %}
-            </li>
-        </ul>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+{#        <img src="{% static 'images/logo.png' %}" alt="Logo" width="60" height="54">#}
+         <a class="navbar-nav me-auto mb-2 mb-lg-1 p-1" style="color: red" href="{% url 'cars' %}">AlbCars
+      </a>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cars' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register_car' %}">Add Car</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+      </ul>
+      <!-- Left links -->
     </div>
-{% if user.is_superuser %}
-<span class="navbar-text p-3">
-            <a href="{% url 'admin-statistic' %}" >
+
+
+    <!-- Right elements -->
+      {% if user.is_authenticated %}
+                    <div class="dropdown md-4">
+                        <a href="#"
+                           class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% static 'images/R.png' %}" alt="" width="40" height="40"
+                                 class="rounded-circle">
+                            <i class=""> @{{ user.username }}</i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-light text-small shadow">
+                            <li><a class="dropdown-item" href="{%  url 'messages_index' %}">Messages</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profile' user.pk %}">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
+                        </ul>
+                    </div>
+
+                {% else %}
+                    <span><a type="submit" href="{% url 'login' %}" class="btn  btn-info text-light">Login</a>
+                <a type="submit" href="{% url 'register' %}" class="btn  btn-info text-light">Register</a></span>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <span class="navbar-text p-3">
+            <a href="{% url 'admin-statistic' %}">
                   Admin Statistic
                 </a>
-{% endif %}
-    <span class="navbar-text p-3">
-            <a href="{% url 'messages_index' %}" type="button" class="btn btn-warning position-relative">
-                  Inbox
-                </a>
-  </span>
+                    </span>
+                {% endif %}
+    </div>
+    <!-- Right elements -->
+
+  <!-- Container wrapper -->
 </nav>
+<!-- Navbar -->
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
