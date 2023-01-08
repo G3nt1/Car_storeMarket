@@ -1,8 +1,9 @@
 from cars.forms import CreateUserForm
-from cars.models import Cars
+from cars.models import Cars, Visit
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.utils.datetime_safe import datetime
 
 
 def LoginClient(request):
@@ -22,7 +23,6 @@ def LogoutClient(request):
     return redirect('cars')
 
 
-# todo: Rinderto duke perdorur django forms.
 def RegClients(request):
     if request.method == 'POST':
         user_form = CreateUserForm(request.POST)
@@ -39,4 +39,8 @@ def Profile(request, pk):
     user_profile = User.objects.get(id=pk)
     cars = Cars.objects.filter(owner=user_profile)
 
-    return render(request, 'user/profile.html', {'user_profile': user_profile, 'cars': cars})
+    user_visits = Visit.objects.filter(user=user_profile)
+    viewed_cars = [visit.car for visit in user_visits]
+
+
+    return render(request, 'user/profile.html', {'user_profile': user_profile, 'cars': cars, 'viewed_cars': viewed_cars})

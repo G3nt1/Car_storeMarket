@@ -18,6 +18,8 @@
         }
 
  </style>
+
+    <div class="container">
             <div class="container-fluid">
             <div class="row">
                 <div class="col-md-10">
@@ -40,7 +42,11 @@
               </div>
              </div>
            </div>
-            <hr>
+            {% if not cars %}
+            {% else %}
+                <h5 style="color: #5b80b2">Car Posted</h5>
+            {% endif %}
+
                  {% for cars in cars %}
                 <div class="col-md-10">
                 <div class="card flex-row mb-2">
@@ -89,5 +95,58 @@
                 </div>
                   {% endfor %}
             </div>
-            </div>
+    <hr>
+   <h5 style="color: #006b1b">Car Views</h5>
+{% for cars in viewed_cars %}
+    <div class="container">
+     <div class="col-md-10">
+                <div class="card flex-row mb-2">
+                    <img class="card-img-left example-card-img-responsive" src="{{ cars.image.url }}" alt=""/>
+                    <div class="card-body">
+                        <h4 class="card-title h5 h4-sm"><strong><a href="{% url 'details' cars.pk %}"
+                                                                   style="text-align: center; color: #5b80b2; text-decoration: None;">{{ cars.brand }} {{ cars.model }}</a></strong>
+                        </h4>
+                        <h4 class="badge rounded-pill text-bg-info"><strong> € {{ cars.price|floatformat|intcomma }}</strong></h4>
+                        <div class="card-text">
+                            <table>
+                                <tr>
+                                    <th>Mileage:</th>
+                                    <td>{{ cars.mileage|floatformat|intcomma }}</td>
+                                </tr>
+                                <tr>
+                                    <th>First Registration:</th>
+                                    <td>{{ cars.year }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Type:</th>
+                                    <td>{{ cars.fuel_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prev Owners:</th>
+                                    <td>{{ cars.previous_owners }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Color:</th>
+                                    <td>{{ cars.color }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Motor:</th>
+                                    <td>{{ cars.motor }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Transmission:</th>
+                                    <td>{{ cars.gearbox }}</td>
+                                </tr>
+{#                                <span>View </span>#}
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+{% endfor %}
+<hr>
+</div>
 {% endblock %}

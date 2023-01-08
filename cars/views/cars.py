@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from cars.filters import CarsFilter
 from cars.forms import RegCar
 from cars.models import Cars, CarImage, Visit
-import datetime
+
 
 def get_car_filter(request):
     return CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))

@@ -17,6 +17,5 @@ urlpatterns = [
     path('messages/<str:username>/send', messages.SendMessage, name='messages_send_message'),
 
     path('admin_statistic', administrator.AdminStatistic, name='admin-statistic'),
-    path('ip-monitor', administrator.visitor_ip_address, name='visitor_ip'),
 
 ]
