@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'django_filters',
     'django.contrib.humanize',
-    'hitcount',
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

@@ -5,8 +5,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from cars.filters import CarsFilter
 from cars.forms import RegCar
-from cars.models import Cars, CarImage
-
+from cars.models import Cars, CarImage, Visit
+import datetime
 
 def get_car_filter(request):
     return CarsFilter(request.GET, queryset=Cars.objects.all().order_by('-created_date'))
@@ -64,16 +64,6 @@ def CarShow(request):
     })
 
 
-# def visitor_ip_address(request):
-#
-#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-#
-#     if x_forwarded_for:
-#         ip = x_forwarded_for.split(',')[0]
-#     else:
-#         ip = request.META.get('REMOTE_ADDR')
-#     return ip
-
 @login_required
 def Register_Car(request):
     if request.method == 'POST':
@@ -110,10 +100,15 @@ def Update_Car(request, pk):
 
 
 def CarDetails(request, pk):
-    visitors = Cars.objects.get(id=pk)
-    if visitors:
-        visitors.views = visitors.views + 1
-        visitors.save()
     makina = Cars.objects.get(id=pk)
+    visit = Visit()
+    if request.user.is_authenticated:
+        visit.user = request.user
+    visit.ip = request.META['REMOTE_ADDR']
+    visit.user_agent = request.META['HTTP_USER_AGENT']
+    visit.car = makina
+
+    visit.save()
+
     image = CarImage.objects.filter(model=makina)
-    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image, 'visitors': visitors})
+    return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image})

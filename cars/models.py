@@ -1,7 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericRelation
-from hitcount.models import HitCount
 from multiselectfield import MultiSelectField
 from django.db import models
 from django.utils.datetime_safe import datetime, date
@@ -88,13 +86,7 @@ class Cars(models.Model):
     zip_code = models.CharField(max_length=12, null=True, blank=True)
     country = models.CharField(choices=COUNTRY_CHOICES, default='AL', max_length=1040)
     image = models.FileField(upload_to='static/images-cars/%Y/%m', null=True, blank=True)
-    hit_count = GenericRelation(
-        HitCount, object_id_field='object_pk',
-        related_query_name='hit_count_generic_relation')
-    views = models.IntegerField(default=0)
 
-    def current_hit_count(self):
-        return self.hit_count.hits
 
     def __str__(self):
         return f'{self.brand} {self.model} {self.year}'
@@ -122,3 +114,14 @@ class Monitor(models.Model):
 
     def __str__(self):
         return self.ip_address, self.browser, self.system,
+
+
+class Visit(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    ip = models.CharField(max_length=15)
+    user_agent = models.CharField(max_length=500)
+    date = models.DateTimeField(auto_now_add=True)
+    car = models.ForeignKey(Cars, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return f'{self.user} {self.car} {self.ip} {self.date}'
