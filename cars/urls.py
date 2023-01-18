@@ -8,6 +8,7 @@ urlpatterns = [
     path('regcar', cars.Register_Car, name='register_car'),
     path('update-car/<int:pk>', cars.Update_Car, name='update_car'),
     path('car_details/<int:pk>', cars.CarDetails, name='details'),
+    path('most-views-cars/', cars.MostViewsCars, name='most-views-cars'),
     path('profile/<int:pk>', authentication.Profile, name='profile'),
     path('login/', authentication.LoginClient, name='login'),
     path('logout/', authentication.LogoutClient, name='logout'),

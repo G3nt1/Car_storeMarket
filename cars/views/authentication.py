@@ -42,5 +42,4 @@ def Profile(request, pk):
     user_visits = Visit.objects.filter(user=user_profile)
     viewed_cars = [visit.car for visit in user_visits]
 
-
     return render(request, 'user/profile.html', {'user_profile': user_profile, 'cars': cars, 'viewed_cars': viewed_cars})

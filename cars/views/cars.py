@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from cars.filters import CarsFilter
 from cars.forms import RegCar
 from cars.models import Cars, CarImage, Visit
+from django.db.models import Count
 
 
 def get_car_filter(request):
@@ -112,3 +113,8 @@ def CarDetails(request, pk):
 
     image = CarImage.objects.filter(model=makina)
     return render(request, 'cars/car_details.html', {'makinat': makina, 'image': image})
+
+
+def MostViewsCars(request):
+    visits = Visit.objects.values('car__brand', 'car__model', 'car__image', 'car__price',).annotate(num_visits=Count('car')).order_by('-num_visits')
+    return render(request, 'cars/most_views_cars.html', {'visits': visits})
